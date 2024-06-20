@@ -94,8 +94,10 @@
 		92D4910E2C24860E0081E4AB /* Yandex_Assignment */ = {
 			isa = PBXGroup;
 			children = (
+				92D4913C2C24865F0081E4AB /* Models */,
+				92D4913B2C2486530081E4AB /* ViewModels */,
+				92D491392C2486460081E4AB /* Views */,
 				92D4910F2C24860E0081E4AB /* Yandex_AssignmentApp.swift */,
-				92D491112C24860E0081E4AB /* ContentView.swift */,
 				92D491132C24860F0081E4AB /* Assets.xcassets */,
 				92D491152C24860F0081E4AB /* Preview Content */,
 			);
@@ -125,6 +127,28 @@
 				92D4912C2C24860F0081E4AB /* Yandex_AssignmentUITestsLaunchTests.swift */,
 			);
 			path = Yandex_AssignmentUITests;
+			sourceTree = "<group>";
+		};
+		92D491392C2486460081E4AB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92D491112C24860E0081E4AB /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		92D4913B2C2486530081E4AB /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		92D4913C2C24865F0081E4AB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
