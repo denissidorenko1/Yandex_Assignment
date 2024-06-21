@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92D33C3A2C2496E400A6EED5 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C392C2496E400A6EED5 /* TodoItem.swift */; };
+		92D33C3C2C24E5C100A6EED5 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C3B2C24E5C100A6EED5 /* FileCache.swift */; };
+		92D33C3E2C25952200A6EED5 /* ToDoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C3D2C25952200A6EED5 /* ToDoItemTests.swift */; };
+		92D33C402C259EB100A6EED5 /* FileCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C3F2C259EB100A6EED5 /* FileCacheTests.swift */; };
 		92D491102C24860E0081E4AB /* Yandex_AssignmentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D4910F2C24860E0081E4AB /* Yandex_AssignmentApp.swift */; };
 		92D491122C24860E0081E4AB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D491112C24860E0081E4AB /* ContentView.swift */; };
 		92D491142C24860F0081E4AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92D491132C24860F0081E4AB /* Assets.xcassets */; };
 		92D491172C24860F0081E4AB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92D491162C24860F0081E4AB /* Preview Assets.xcassets */; };
-		92D491212C24860F0081E4AB /* Yandex_AssignmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D491202C24860F0081E4AB /* Yandex_AssignmentTests.swift */; };
 		92D4912B2C24860F0081E4AB /* Yandex_AssignmentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D4912A2C24860F0081E4AB /* Yandex_AssignmentUITests.swift */; };
 		92D4912D2C24860F0081E4AB /* Yandex_AssignmentUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D4912C2C24860F0081E4AB /* Yandex_AssignmentUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
@@ -34,13 +37,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		92D33C392C2496E400A6EED5 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
+		92D33C3B2C24E5C100A6EED5 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
+		92D33C3D2C25952200A6EED5 /* ToDoItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemTests.swift; sourceTree = "<group>"; };
+		92D33C3F2C259EB100A6EED5 /* FileCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCacheTests.swift; sourceTree = "<group>"; };
 		92D4910C2C24860E0081E4AB /* Yandex_Assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yandex_Assignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92D4910F2C24860E0081E4AB /* Yandex_AssignmentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yandex_AssignmentApp.swift; sourceTree = "<group>"; };
 		92D491112C24860E0081E4AB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		92D491132C24860F0081E4AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92D491162C24860F0081E4AB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		92D4911C2C24860F0081E4AB /* Yandex_AssignmentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Yandex_AssignmentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		92D491202C24860F0081E4AB /* Yandex_AssignmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yandex_AssignmentTests.swift; sourceTree = "<group>"; };
 		92D491262C24860F0081E4AB /* Yandex_AssignmentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Yandex_AssignmentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92D4912A2C24860F0081E4AB /* Yandex_AssignmentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yandex_AssignmentUITests.swift; sourceTree = "<group>"; };
 		92D4912C2C24860F0081E4AB /* Yandex_AssignmentUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yandex_AssignmentUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -115,7 +121,8 @@
 		92D4911F2C24860F0081E4AB /* Yandex_AssignmentTests */ = {
 			isa = PBXGroup;
 			children = (
-				92D491202C24860F0081E4AB /* Yandex_AssignmentTests.swift */,
+				92D33C3D2C25952200A6EED5 /* ToDoItemTests.swift */,
+				92D33C3F2C259EB100A6EED5 /* FileCacheTests.swift */,
 			);
 			path = Yandex_AssignmentTests;
 			sourceTree = "<group>";
@@ -140,6 +147,7 @@
 		92D4913B2C2486530081E4AB /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				92D33C3B2C24E5C100A6EED5 /* FileCache.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -147,6 +155,7 @@
 		92D4913C2C24865F0081E4AB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				92D33C392C2496E400A6EED5 /* TodoItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -282,6 +291,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				92D491122C24860E0081E4AB /* ContentView.swift in Sources */,
+				92D33C3A2C2496E400A6EED5 /* TodoItem.swift in Sources */,
+				92D33C3C2C24E5C100A6EED5 /* FileCache.swift in Sources */,
 				92D491102C24860E0081E4AB /* Yandex_AssignmentApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -290,7 +301,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92D491212C24860F0081E4AB /* Yandex_AssignmentTests.swift in Sources */,
+				92D33C3E2C25952200A6EED5 /* ToDoItemTests.swift in Sources */,
+				92D33C402C259EB100A6EED5 /* FileCacheTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
