@@ -15,8 +15,19 @@ struct TodoItem {
     let isCompleted: Bool
     let creationDate: Date
     let changeDate: Date?
+    let hex: String?
     
-    init(id: String = UUID().uuidString, text: String, priority: Priority, deadLineDate: Date? = nil, isCompleted: Bool, creationDate: Date, changeDate: Date? = nil) {
+    
+    init(
+        id: String = UUID().uuidString,
+        text: String,
+        priority: Priority,
+        deadLineDate: Date? = nil,
+        isCompleted: Bool,
+        creationDate: Date = .now,
+        changeDate: Date? = nil,
+        hex: String?
+    ) {
         self.id = id
         self.text = text
         self.priority = priority
@@ -24,6 +35,7 @@ struct TodoItem {
         self.isCompleted = isCompleted
         self.creationDate = creationDate
         self.changeDate = changeDate
+        self.hex = hex
     }
 }
 
@@ -38,6 +50,7 @@ extension TodoItem {
         case isCompleted
         case creationDate
         case changeDate
+        case hex
     }
     
     static func parse(json: Any) -> TodoItem? {
@@ -57,6 +70,7 @@ extension TodoItem {
         let priority = deserialised[FieldDescriptor.priority.rawValue] == nil ? Priority.usual : Priority(rawValue: deserialised[FieldDescriptor.priority.rawValue]!)!
         let deadLineDate = try? Date(deserialised[FieldDescriptor.deadLineDate.rawValue] ?? "", strategy: .iso8601)
         let changeDate = try? Date(deserialised[FieldDescriptor.changeDate.rawValue] ?? "", strategy: .iso8601)
+        let hex = deserialised[FieldDescriptor.hex.rawValue]
 
         return TodoItem(
             id: id,
@@ -65,7 +79,8 @@ extension TodoItem {
             deadLineDate: deadLineDate,
             isCompleted: completed,
             creationDate: created,
-            changeDate: changeDate
+            changeDate: changeDate,
+            hex: hex
         )
     }
     
@@ -78,6 +93,7 @@ extension TodoItem {
         dict[FieldDescriptor.text.rawValue] = text
         dict[FieldDescriptor.isCompleted.rawValue] = isCompleted.description
         dict[FieldDescriptor.creationDate.rawValue] = formatter.string(from: creationDate)
+        dict[FieldDescriptor.hex.rawValue] = hex
         
         if changeDate != nil { dict[FieldDescriptor.changeDate.rawValue] = formatter.string(from: changeDate!) }
         if priority != .usual { dict[FieldDescriptor.priority.rawValue] = priority.rawValue }
@@ -119,7 +135,8 @@ extension TodoItem {
                 deadLineDate: deadLineDate,
                 isCompleted: isCompleted,
                 creationDate: creationDate,
-                changeDate: changeDate
+                changeDate: changeDate,
+                hex: "FF00FF"
             )
             items.append(item)
         }
