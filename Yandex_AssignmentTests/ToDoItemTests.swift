@@ -18,7 +18,7 @@ final class ToDoItemTests: XCTestCase {
     func testValidateJSON() {
         let id = "qwerty"
         let creationDate = Date.now
-        let item = TodoItem(id: id, text: "text", priority: .important, isCompleted: true, creationDate: creationDate)
+        let item = TodoItem(id: id, text: "text", priority: .important, isCompleted: true, creationDate: creationDate, hex: nil)
         
         let json = item.json
         guard let data = json as? Data else { return }
@@ -39,7 +39,8 @@ final class ToDoItemTests: XCTestCase {
             text: text,
             priority: priority,
             isCompleted: isCompleted,
-            creationDate: creationDate
+            creationDate: creationDate,
+            hex: nil
         )
         
         let json = initialItem.json
@@ -53,7 +54,8 @@ final class ToDoItemTests: XCTestCase {
             text: "",
             priority: .important,
             isCompleted: true,
-            creationDate: .now
+            creationDate: .now,
+            hex: nil
         )
         
         guard let jsonData = item.json as? Data else {return}
@@ -68,7 +70,8 @@ final class ToDoItemTests: XCTestCase {
             text: "",
             priority: .unimportant,
             isCompleted: true,
-            creationDate: .now
+            creationDate: .now,
+            hex: nil
         )
         
         guard let jsonData = item.json as? Data else {return}
@@ -85,7 +88,8 @@ final class ToDoItemTests: XCTestCase {
             deadLineDate: .now,
             isCompleted: true,
             creationDate: .now,
-            changeDate: .now
+            changeDate: .now,
+            hex: nil
         )
         
         guard let jsonData = item.json as? Data else {return}
@@ -104,7 +108,8 @@ final class ToDoItemTests: XCTestCase {
             deadLineDate: .now,
             isCompleted: true,
             creationDate: .now,
-            changeDate: .now
+            changeDate: .now,
+            hex: nil
         )
         
         let csv = TodoItem.constructCompleteCSV(items: [item])
@@ -122,12 +127,12 @@ final class ToDoItemTests: XCTestCase {
             deadLineDate: .now,
             isCompleted: true,
             creationDate: .now,
-            changeDate: .now
+            changeDate: .now,
+            hex: nil
         )
         
         let csv = TodoItem.constructCompleteCSV(items: [item])
         TodoItem.writeCSVToFile(csv: csv, with: csvTestURL, filename: csvTestFileName)
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let deconstructed = TodoItem.readCSVFromFile(with: csvTestURL, fileName: csvTestFileName)!
         let parsed = TodoItem.parseCSV(with: deconstructed)[0]
         XCTAssert(item == parsed)
@@ -145,7 +150,8 @@ extension TodoItem: Equatable {
               // костыли: при конвертации в строку и обратно образуется неточность, которая ломает "==" для дат
               (((lhs.changeDate ?? Date.now).addingTimeInterval(1) )...((lhs.changeDate ?? Date.now).addingTimeInterval(3))).contains((rhs.changeDate ?? Date.now).addingTimeInterval(2)),
               (((lhs.creationDate).addingTimeInterval(1) )...((lhs.creationDate).addingTimeInterval(3))).contains((rhs.creationDate).addingTimeInterval(2)),
-              (((lhs.deadLineDate ?? Date.now).addingTimeInterval(1))...((lhs.deadLineDate ?? Date.now).addingTimeInterval(3))).contains((rhs.deadLineDate ?? Date.now).addingTimeInterval(2))
+              (((lhs.deadLineDate ?? Date.now).addingTimeInterval(1))...((lhs.deadLineDate ?? Date.now).addingTimeInterval(3))).contains((rhs.deadLineDate ?? Date.now).addingTimeInterval(2)),
+                lhs.hex == rhs.hex
         else {
             return false
         }

@@ -7,12 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		924E50B02C2CAC09004BEE2B /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50AF2C2CAC09004BEE2B /* TaskView.swift */; };
+		924E50B52C2D869F004BEE2B /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50B42C2D869F004BEE2B /* DateExtension.swift */; };
+		924E50B72C2EC8F1004BEE2B /* ItemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50B62C2EC8F1004BEE2B /* ItemListViewModel.swift */; };
+		924E50B92C2EF4B7004BEE2B /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50B82C2EF4B7004BEE2B /* TaskViewModel.swift */; };
+		924E50BB2C2F16F2004BEE2B /* NewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50BA2C2F16F2004BEE2B /* NewCell.swift */; };
+		924E50BE2C2F1714004BEE2B /* ToDoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50BD2C2F1714004BEE2B /* ToDoCell.swift */; };
+		924E50C02C2F52B7004BEE2B /* GradientPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50BF2C2F52B7004BEE2B /* GradientPalette.swift */; };
+		924E50C22C2F7B59004BEE2B /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50C12C2F7B59004BEE2B /* ColorExtension.swift */; };
 		92D33C3A2C2496E400A6EED5 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C392C2496E400A6EED5 /* TodoItem.swift */; };
 		92D33C3C2C24E5C100A6EED5 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C3B2C24E5C100A6EED5 /* FileCache.swift */; };
 		92D33C3E2C25952200A6EED5 /* ToDoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C3D2C25952200A6EED5 /* ToDoItemTests.swift */; };
 		92D33C402C259EB100A6EED5 /* FileCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C3F2C259EB100A6EED5 /* FileCacheTests.swift */; };
 		92D491102C24860E0081E4AB /* Yandex_AssignmentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D4910F2C24860E0081E4AB /* Yandex_AssignmentApp.swift */; };
-		92D491122C24860E0081E4AB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D491112C24860E0081E4AB /* ContentView.swift */; };
+		92D491122C24860E0081E4AB /* ItemListScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D491112C24860E0081E4AB /* ItemListScreenView.swift */; };
 		92D491142C24860F0081E4AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92D491132C24860F0081E4AB /* Assets.xcassets */; };
 		92D491172C24860F0081E4AB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92D491162C24860F0081E4AB /* Preview Assets.xcassets */; };
 		92D4912B2C24860F0081E4AB /* Yandex_AssignmentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D4912A2C24860F0081E4AB /* Yandex_AssignmentUITests.swift */; };
@@ -37,13 +45,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		924E50AF2C2CAC09004BEE2B /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
+		924E50B42C2D869F004BEE2B /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		924E50B62C2EC8F1004BEE2B /* ItemListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListViewModel.swift; sourceTree = "<group>"; };
+		924E50B82C2EF4B7004BEE2B /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
+		924E50BA2C2F16F2004BEE2B /* NewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCell.swift; sourceTree = "<group>"; };
+		924E50BD2C2F1714004BEE2B /* ToDoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
+		924E50BF2C2F52B7004BEE2B /* GradientPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientPalette.swift; sourceTree = "<group>"; };
+		924E50C12C2F7B59004BEE2B /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		92D33C392C2496E400A6EED5 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		92D33C3B2C24E5C100A6EED5 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		92D33C3D2C25952200A6EED5 /* ToDoItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemTests.swift; sourceTree = "<group>"; };
 		92D33C3F2C259EB100A6EED5 /* FileCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCacheTests.swift; sourceTree = "<group>"; };
 		92D4910C2C24860E0081E4AB /* Yandex_Assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yandex_Assignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92D4910F2C24860E0081E4AB /* Yandex_AssignmentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Yandex_AssignmentApp.swift; sourceTree = "<group>"; };
-		92D491112C24860E0081E4AB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		92D491112C24860E0081E4AB /* ItemListScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListScreenView.swift; sourceTree = "<group>"; };
 		92D491132C24860F0081E4AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92D491162C24860F0081E4AB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		92D4911C2C24860F0081E4AB /* Yandex_AssignmentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Yandex_AssignmentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +93,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		924E50B32C2D8685004BEE2B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				924E50B42C2D869F004BEE2B /* DateExtension.swift */,
+				924E50C12C2F7B59004BEE2B /* ColorExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		92D491032C24860E0081E4AB = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +125,7 @@
 		92D4910E2C24860E0081E4AB /* Yandex_Assignment */ = {
 			isa = PBXGroup;
 			children = (
+				924E50B32C2D8685004BEE2B /* Extensions */,
 				92D4913C2C24865F0081E4AB /* Models */,
 				92D4913B2C2486530081E4AB /* ViewModels */,
 				92D491392C2486460081E4AB /* Views */,
@@ -139,7 +165,11 @@
 		92D491392C2486460081E4AB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				92D491112C24860E0081E4AB /* ContentView.swift */,
+				92D491112C24860E0081E4AB /* ItemListScreenView.swift */,
+				924E50AF2C2CAC09004BEE2B /* TaskView.swift */,
+				924E50BA2C2F16F2004BEE2B /* NewCell.swift */,
+				924E50BD2C2F1714004BEE2B /* ToDoCell.swift */,
+				924E50BF2C2F52B7004BEE2B /* GradientPalette.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -147,7 +177,8 @@
 		92D4913B2C2486530081E4AB /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				92D33C3B2C24E5C100A6EED5 /* FileCache.swift */,
+				924E50B62C2EC8F1004BEE2B /* ItemListViewModel.swift */,
+				924E50B82C2EF4B7004BEE2B /* TaskViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -155,6 +186,7 @@
 		92D4913C2C24865F0081E4AB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				92D33C3B2C24E5C100A6EED5 /* FileCache.swift */,
 				92D33C392C2496E400A6EED5 /* TodoItem.swift */,
 			);
 			path = Models;
@@ -290,10 +322,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92D491122C24860E0081E4AB /* ContentView.swift in Sources */,
+				92D491122C24860E0081E4AB /* ItemListScreenView.swift in Sources */,
+				924E50B52C2D869F004BEE2B /* DateExtension.swift in Sources */,
 				92D33C3A2C2496E400A6EED5 /* TodoItem.swift in Sources */,
+				924E50C22C2F7B59004BEE2B /* ColorExtension.swift in Sources */,
 				92D33C3C2C24E5C100A6EED5 /* FileCache.swift in Sources */,
+				924E50B02C2CAC09004BEE2B /* TaskView.swift in Sources */,
+				924E50B92C2EF4B7004BEE2B /* TaskViewModel.swift in Sources */,
+				924E50B72C2EC8F1004BEE2B /* ItemListViewModel.swift in Sources */,
+				924E50BB2C2F16F2004BEE2B /* NewCell.swift in Sources */,
 				92D491102C24860E0081E4AB /* Yandex_AssignmentApp.swift in Sources */,
+				924E50C02C2F52B7004BEE2B /* GradientPalette.swift in Sources */,
+				924E50BE2C2F1714004BEE2B /* ToDoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +506,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -495,6 +536,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

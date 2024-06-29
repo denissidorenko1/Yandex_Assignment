@@ -23,7 +23,8 @@ final class FileCacheTests: XCTestCase {
             text: "test",
             priority: .unimportant,
             isCompleted: true,
-            creationDate: .now
+            creationDate: .now,
+            hex: nil
         )
         guard let cache else { XCTFail(); return}
         try? cache.addNewItem(with: item)
@@ -39,7 +40,8 @@ final class FileCacheTests: XCTestCase {
             text: "test",
             priority: .unimportant,
             isCompleted: true,
-            creationDate: Date.now
+            creationDate: Date.now,
+            hex: nil
         )
         
         try? cache.addNewItem(with: item)
@@ -55,7 +57,8 @@ final class FileCacheTests: XCTestCase {
             text: "test",
             priority: .unimportant,
             isCompleted: true,
-            creationDate: Date.now
+            creationDate: Date.now,
+            hex: nil
         )
         guard let _ = try? cache.addNewItem(with: item) else { XCTFail(); return }
         guard let _ = try? cache.saveAllItemsToFile(with: testURL, filename: testFileName) else { XCTFail(); return }
@@ -72,7 +75,8 @@ final class FileCacheTests: XCTestCase {
             text: "test",
             priority: .unimportant,
             isCompleted: true,
-            creationDate: Date.now
+            creationDate: Date.now,
+            hex: nil
         )
         try! cache.addNewItem(with: item)
         guard let _ = try? cache.saveAllItemsToFile(with: testURL, filename: testFileName) else { XCTFail(); return }
