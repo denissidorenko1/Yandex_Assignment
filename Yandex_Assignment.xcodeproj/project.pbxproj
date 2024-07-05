@@ -18,6 +18,8 @@
 		925880A32C384BAC00D99828 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925880A22C384BAC00D99828 /* Category.swift */; };
 		927962322C3884BD00B0C5D9 /* AddNewCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927962312C3884BD00B0C5D9 /* AddNewCategoryView.swift */; };
 		927962342C38888700B0C5D9 /* AddNewCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927962332C38888700B0C5D9 /* AddNewCategoryViewModel.swift */; };
+		928CD0532C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928CD0522C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift */; };
+		928CD0552C38B0CD00668AFC /* CalendarView+CollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928CD0542C38B0CD00668AFC /* CalendarView+CollectionViewExtensions.swift */; };
 		92D33C3A2C2496E400A6EED5 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C392C2496E400A6EED5 /* TodoItem.swift */; };
 		92D33C3C2C24E5C100A6EED5 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C3B2C24E5C100A6EED5 /* FileCache.swift */; };
 		92D33C3E2C25952200A6EED5 /* ToDoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C3D2C25952200A6EED5 /* ToDoItemTests.swift */; };
@@ -65,6 +67,8 @@
 		925880A22C384BAC00D99828 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		927962312C3884BD00B0C5D9 /* AddNewCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewCategoryView.swift; sourceTree = "<group>"; };
 		927962332C38888700B0C5D9 /* AddNewCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewCategoryViewModel.swift; sourceTree = "<group>"; };
+		928CD0522C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarView+TableViewExtensions.swift"; sourceTree = "<group>"; };
+		928CD0542C38B0CD00668AFC /* CalendarView+CollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarView+CollectionViewExtensions.swift"; sourceTree = "<group>"; };
 		92D33C392C2496E400A6EED5 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		92D33C3B2C24E5C100A6EED5 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		92D33C3D2C25952200A6EED5 /* ToDoItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemTests.swift; sourceTree = "<group>"; };
@@ -194,6 +198,8 @@
 				92D780DB2C36C95600605FFA /* CalendarViewDateCell.swift */,
 				92D780D92C35DAE800605FFA /* CalendarViewCell.swift */,
 				927962312C3884BD00B0C5D9 /* AddNewCategoryView.swift */,
+				928CD0522C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift */,
+				928CD0542C38B0CD00668AFC /* CalendarView+CollectionViewExtensions.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -351,6 +357,7 @@
 			files = (
 				92D491122C24860E0081E4AB /* ItemListScreenView.swift in Sources */,
 				924E50B52C2D869F004BEE2B /* DateExtension.swift in Sources */,
+				928CD0532C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift in Sources */,
 				925880A32C384BAC00D99828 /* Category.swift in Sources */,
 				92D780D82C35D9D300605FFA /* CalendarViewSUI.swift in Sources */,
 				92D33C3A2C2496E400A6EED5 /* TodoItem.swift in Sources */,
@@ -365,6 +372,7 @@
 				927962342C38888700B0C5D9 /* AddNewCategoryViewModel.swift in Sources */,
 				924E50B92C2EF4B7004BEE2B /* TaskViewModel.swift in Sources */,
 				924E50B72C2EC8F1004BEE2B /* ItemListViewModel.swift in Sources */,
+				928CD0552C38B0CD00668AFC /* CalendarView+CollectionViewExtensions.swift in Sources */,
 				924E50BB2C2F16F2004BEE2B /* NewCell.swift in Sources */,
 				92D491102C24860E0081E4AB /* Yandex_AssignmentApp.swift in Sources */,
 				92D780D62C35D9A000605FFA /* Wrapper.swift in Sources */,
