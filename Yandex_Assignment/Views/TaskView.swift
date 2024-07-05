@@ -16,8 +16,12 @@ struct TaskView: View {
     @State var isEditing: Bool
     @State var isCalendarShowed: Bool
     
+    @State var isAddingNewCategory: Bool = false
+    
     @State var slider: Double // позиция слайдер
     @State var color: Double // значение hue для hsv
+    
+    @State var selectedCategory: Category
     
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -63,6 +67,7 @@ struct TaskView: View {
         self.hexColor = item.hex ?? "000000"
         self.slider = 0.5
         self.color = 0.5
+        self.selectedCategory = item.category
     }
     
 
@@ -101,7 +106,8 @@ struct TaskView: View {
                         deadLineDate: deadLine,
                         isCompleted: false,
                         creationDate: .now,
-                        hex: hexColor
+                        hex: hexColor,
+                        category: selectedCategory
                     )
                     vm.add(newItem: inputedItem)
                     presentationMode.wrappedValue.dismiss()
@@ -131,6 +137,28 @@ struct TaskView: View {
                             .pickerStyle(SegmentedPickerStyle())
                             .frame(maxWidth: 150)
                         }
+                        
+                            HStack {
+                                Picker("Текущая категория: ", selection: $selectedCategory) {
+                                    ForEach(vm.categories, id: \.self) {
+                                        Text($0.name).tag($0.hashValue)
+                                    }
+                                }
+                            }
+                        Button {
+                            isAddingNewCategory = true
+                        } label: {
+                            Text("Добавить категорию")
+                        }
+                        .sheet(isPresented: $isAddingNewCategory, onDismiss: {
+                            vm.updateCategories()
+                        }, content: {
+                            AddNewCategoryView(color: 0.1, name: "")
+                        })
+
+                        
+                        
+                        
                         VStack {
                             HStack {
                                 Text("Цвет: ")
@@ -289,4 +317,19 @@ struct TaskView: View {
             }
         }
     }
+}
+
+#Preview {
+    TaskView(
+        item: TodoItem(
+            text: "",
+            priority: .usual,
+            isCompleted: false,
+            hex: nil
+        ),
+        vm: ItemListViewModel(
+            cacher: FileCache()
+        ),
+        viewState: .adding
+    )
 }

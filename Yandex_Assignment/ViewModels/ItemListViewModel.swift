@@ -42,14 +42,14 @@ final class ItemListViewModel: ListViewManageable {
     }
     
     
-    func markDone(with id: String) {
+    func toggleDone(with id: String) {
         guard let item = cacher.items[id] else { return }
         let newItem = TodoItem(
             id: item.id,
             text: item.text,
             priority: item.priority,
             deadLineDate: item.deadLineDate,
-            isCompleted: true,
+            isCompleted: !item.isCompleted,
             creationDate: item.creationDate,
             changeDate: item.changeDate,
             hex: item.hex
@@ -107,7 +107,7 @@ protocol ListViewManageable: AnyObject {
     
     var isDoneShown: Bool { get set }
     
-    func markDone(with id: String)
+    func toggleDone(with id: String)
     
     func fetch()
     

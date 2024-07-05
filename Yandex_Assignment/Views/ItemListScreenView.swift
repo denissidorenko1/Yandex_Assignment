@@ -2,17 +2,21 @@ import SwiftUI
 
 struct ItemListScreenView: View {
     @State var showingSheet = false
-    @State var showingSheetEdit = false
+    @State var showingCalendar = false
+    
     @State var vm = ItemListViewModel(cacher: FileCache())
     
     @State var selectedItemForEditing: TodoItem?
+    
+    
     @Environment(\.presentationMode) private var presentationMode
     
     var body: some View {
         NavigationView {
             ZStack {
+                
                 List {
-                    Section{
+                    Section {
                         ForEach(vm.itemList) { item in
                             ToDoCell(item: item)
                                 .swipeActions(edge: .trailing) {
@@ -21,16 +25,13 @@ struct ItemListScreenView: View {
                                             Label("Delete", systemImage: "trash").tint(.red)
                                         }
                                     Button(action: {
-                                        // странная бага: первый презент отрабатывет с пустым вью, последующие - штатно
-                                        presentationMode.wrappedValue.dismiss()
                                         selectedItemForEditing = item
-                                        showingSheetEdit = true
                                     }, label: {
                                         Label("Edit", systemImage: "info.circle").tint(.gray)
                                     })
                                 }
                                 .swipeActions(edge: .leading) {
-                                    Button(action: { vm.markDone(with: item.id) }) {
+                                    Button(action: { vm.toggleDone(with: item.id) }) {
                                         Label("Done", systemImage: "checkmark.circle.fill").tint(.blue)
                                     }
                                 }
@@ -42,14 +43,29 @@ struct ItemListScreenView: View {
                         })
                     }
                 header: {
-                    HStack {
-                        Text("Выполнено — \(vm.doneItemsCount)")
-                        Spacer()
-                        Button(action: {
-                            vm.isDoneShown.toggle()
-                        }, label: {
-                            Text(vm.isDoneShown == false ? "Показать": "Скрыть").font(.subheadline)
-                        })
+                    VStack(alignment: .leading) {
+                            NavigationLink {
+                                let calendarVM = CalendarViewModel(
+                                    model: FileCache(),
+                                    itemListViewModel: vm
+                                )
+                                let calendarWrapper = CalendarWrapper(calendarVM: calendarVM)
+                                calendarWrapper
+                                    .navigationTitle("Мои дела")
+                                    .navigationBarTitleDisplayMode(.inline)
+                                    .ignoresSafeArea()
+                            } label: {
+                                Image(systemName: "calendar")
+                            }
+                        HStack {
+                            Text("Выполнено — \(vm.doneItemsCount)")
+                            Spacer()
+                            Button(action: {
+                                vm.isDoneShown.toggle()
+                            }, label: {
+                                Text(vm.isDoneShown == false ? "Показать": "Скрыть").font(.subheadline)
+                            })
+                        }
                     }
                 }
                 .textCase(.none)
@@ -76,11 +92,14 @@ struct ItemListScreenView: View {
                             viewState: .adding
                         )
                     }
-                    .sheet(isPresented: $showingSheetEdit) {
-                        if let selectedItem = selectedItemForEditing {
-                            TaskView(item: selectedItem, vm: vm, viewState:.editing)
-                        }
-                    }
+                    .sheet(item: $selectedItemForEditing,
+                           content: {smth  in
+                            TaskView(
+                                item: smth,
+                                vm: vm,
+                                viewState:.editing
+                            )
+                    })
                 }
             }
         }
