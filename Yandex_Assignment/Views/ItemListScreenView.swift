@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ItemListScreenView: View {
     @State var showingSheet = false
-    @State var showingSheetEdit = false
     @State var showingCalendar = false
     
     @State var vm = ItemListViewModel(cacher: FileCache())
@@ -26,10 +25,7 @@ struct ItemListScreenView: View {
                                             Label("Delete", systemImage: "trash").tint(.red)
                                         }
                                     Button(action: {
-                                        // странная бага: первый презент отрабатывет с пустым вью, последующие - штатно
-                                        presentationMode.wrappedValue.dismiss()
                                         selectedItemForEditing = item
-                                        showingSheetEdit = true
                                     }, label: {
                                         Label("Edit", systemImage: "info.circle").tint(.gray)
                                     })
@@ -96,11 +92,14 @@ struct ItemListScreenView: View {
                             viewState: .adding
                         )
                     }
-                    .sheet(isPresented: $showingSheetEdit) {
-                        if let selectedItem = selectedItemForEditing {
-                            TaskView(item: selectedItem, vm: vm, viewState:.editing)
-                        }
-                    }
+                    .sheet(item: $selectedItemForEditing,
+                           content: {smth  in
+                            TaskView(
+                                item: smth,
+                                vm: vm,
+                                viewState:.editing
+                            )
+                    })
                 }
             }
         }

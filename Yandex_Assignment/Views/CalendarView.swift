@@ -25,9 +25,9 @@ class CalendarView: UIViewController {
     
     
     private func setupStyles() {
-        view.backgroundColor = UIColor(red: 245/255, green: 244/255, blue: 240/255, alpha: 1)
-        collectionView.backgroundColor = UIColor(red: 245/255, green: 244/255, blue: 240/255, alpha: 1)
-        tableView.backgroundColor = UIColor(red: 245/255, green: 244/255, blue: 240/255, alpha: 1)
+        view.backgroundColor = .backPrimary
+        collectionView.backgroundColor = .backPrimary
+        tableView.backgroundColor = .backPrimary
         
         addNewButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
         addNewButton.imageView?.contentMode = .scaleAspectFill
@@ -70,6 +70,7 @@ class CalendarView: UIViewController {
         viewModel.fetch()
         tableView.reloadData()
         collectionView.reloadData()
+        selectTapped(didSelectItemAt: IndexPath(row: 0, section: 0))
     }
     
     private func setupConstraints() {

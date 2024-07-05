@@ -11,7 +11,7 @@ final class CalendarViewDateCell: UICollectionViewCell {
         contentView.addSubview(dayLabel)
         dayLabel.translatesAutoresizingMaskIntoConstraints = false
         setupConstraintsForDate()
-        contentView.backgroundColor = UIColor(red: 245/255, green: 244/255, blue: 240/255, alpha: 1)
+        contentView.backgroundColor = .backPrimary
         setupFonts()
         dayLabel.textAlignment = .center
     }
@@ -21,14 +21,14 @@ final class CalendarViewDateCell: UICollectionViewCell {
     }
     
     func makeSelected() {
-        contentView.backgroundColor = UIColor(red: 207/255, green: 207/255, blue: 191/255, alpha: 1)
+        contentView.backgroundColor = .support
         contentView.layer.cornerRadius = 10
         contentView.layer.borderColor = UIColor(red: 142/255, green: 142/255, blue: 142/255, alpha: 1).cgColor
         contentView.layer.borderWidth = 2
     }
     
     func deselect() {
-        contentView.backgroundColor = UIColor(red: 245/255, green: 244/255, blue: 240/255, alpha: 1)
+        contentView.backgroundColor = .backPrimary
         contentView.layer.cornerRadius = 0
         contentView.layer.borderColor = UIColor(red: 142/255, green: 142/255, blue: 142/255, alpha: 1).cgColor
         contentView.layer.borderWidth = 0
