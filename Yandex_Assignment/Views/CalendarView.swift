@@ -5,6 +5,7 @@ class CalendarView: UIViewController {
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     let addNewButton =  UIButton()
+    let separator = UILabel()
     
     var viewModel: CalendarViewModel!
     
@@ -16,6 +17,7 @@ class CalendarView: UIViewController {
         view.addSubview(tableView)
         view.addSubview(collectionView)
         view.addSubview(addNewButton)
+        view.addSubview(separator)
         setupConstraints()
         setupActions()
         setupStyles()
@@ -44,6 +46,8 @@ class CalendarView: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.allowsMultipleSelection = false
+        
+        separator.backgroundColor = .separator
     }
     
     private func setupActions() {
@@ -77,6 +81,7 @@ class CalendarView: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addNewButton.translatesAutoresizingMaskIntoConstraints = false
+        separator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             view.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
@@ -86,14 +91,19 @@ class CalendarView: UIViewController {
             view.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
             view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: collectionView.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: tableView.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: separator.topAnchor),
+            separator.heightAnchor.constraint(equalToConstant: 1),
+            separator.bottomAnchor.constraint(equalTo: tableView.topAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: 80),
             
             
             addNewButton.heightAnchor.constraint(equalToConstant: 44),
             addNewButton.widthAnchor.constraint(equalToConstant: 44),
             addNewButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            addNewButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -75)
+            addNewButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -75),
+            
+            separator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
     
