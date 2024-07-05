@@ -16,7 +16,7 @@ struct TodoItem {
     let creationDate: Date
     let changeDate: Date?
     let hex: String?
-    
+    let category: Category
     
     init(
         id: String = UUID().uuidString,
@@ -26,7 +26,8 @@ struct TodoItem {
         isCompleted: Bool,
         creationDate: Date = .now,
         changeDate: Date? = nil,
-        hex: String?
+        hex: String?,
+        category: Category = Category(name: "Другое", hexColor: "FFFFFF")
     ) {
         self.id = id
         self.text = text
@@ -36,6 +37,7 @@ struct TodoItem {
         self.creationDate = creationDate
         self.changeDate = changeDate
         self.hex = hex
+        self.category = category
     }
 }
 
@@ -51,6 +53,8 @@ extension TodoItem {
         case creationDate
         case changeDate
         case hex
+        case categoryName
+        case categoryColor
     }
     
     static func parse(json: Any) -> TodoItem? {
@@ -62,7 +66,9 @@ extension TodoItem {
               let text = deserialised[FieldDescriptor.text.rawValue],
               let isCompleted = deserialised[FieldDescriptor.isCompleted.rawValue],
               let creationDate = deserialised[FieldDescriptor.creationDate.rawValue],
-              let created = try? Date(creationDate, strategy: .iso8601)  
+              let created = try? Date(creationDate, strategy: .iso8601),
+              let categoryName = deserialised[FieldDescriptor.categoryName.rawValue],
+              let categoryColor = deserialised[FieldDescriptor.categoryColor.rawValue]
         else { return nil }
     
         // Опциональные значения и развертывания
@@ -80,7 +86,8 @@ extension TodoItem {
             isCompleted: completed,
             creationDate: created,
             changeDate: changeDate,
-            hex: hex
+            hex: hex,
+            category: Category(name: categoryName, hexColor: categoryColor)
         )
     }
     
@@ -94,6 +101,8 @@ extension TodoItem {
         dict[FieldDescriptor.isCompleted.rawValue] = isCompleted.description
         dict[FieldDescriptor.creationDate.rawValue] = formatter.string(from: creationDate)
         dict[FieldDescriptor.hex.rawValue] = hex
+        dict[FieldDescriptor.categoryName.rawValue] = category.name
+        dict[FieldDescriptor.categoryColor.rawValue] = category.hexColor
         
         if changeDate != nil { dict[FieldDescriptor.changeDate.rawValue] = formatter.string(from: changeDate!) }
         if priority != .usual { dict[FieldDescriptor.priority.rawValue] = priority.rawValue }

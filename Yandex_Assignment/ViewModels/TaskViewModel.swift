@@ -11,12 +11,19 @@ final class TaskViewModel: TaskViewModelManageable {
     var item: TodoItem
     var viewState: ViewState
     weak var itemListVM:  ListViewManageable?
+    var categories: [Category] = []
     
+    var categoryManager = CategoryManager()
     
-    init(item: TodoItem, itemListViewModel: ListViewManageable, viewState: ViewState) {
+    init(
+        item: TodoItem,
+        itemListViewModel: ListViewManageable,
+        viewState: ViewState
+    ) {
         self.item = item
         self.itemListVM = itemListViewModel
         self.viewState = viewState
+        updateCategories()
     }
     
     func add(newItem: TodoItem) {
@@ -44,6 +51,11 @@ final class TaskViewModel: TaskViewModelManageable {
 
     }
     
+    func updateCategories() {
+        categoryManager.load()
+        categories = categoryManager.categories
+    }
+    
     func edit(newValue: TodoItem) {
         guard let itemListVM else {return}
         switch viewState {
@@ -58,7 +70,8 @@ final class TaskViewModel: TaskViewModelManageable {
                 isCompleted: newValue.isCompleted,
                 creationDate: newValue.creationDate,
                 changeDate: .now,
-                hex: newValue.hex
+                hex: newValue.hex,
+                category: newValue.category
             )
             itemListVM.update(with: item.id, newVersion: newVersion)
             itemListVM.save()
@@ -72,6 +85,8 @@ final class TaskViewModel: TaskViewModelManageable {
 protocol TaskViewModelManageable: AnyObject {
     var item: TodoItem {get}
     
+    var categories: [Category] {get}
+    
     var viewState: ViewState {get}
     
     var itemListVM: ListViewManageable? {get}
@@ -81,4 +96,6 @@ protocol TaskViewModelManageable: AnyObject {
     func delete()
     
     func edit(newValue: TodoItem)
+    
+    func updateCategories()
 }

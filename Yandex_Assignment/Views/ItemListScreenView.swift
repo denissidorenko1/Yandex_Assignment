@@ -3,16 +3,21 @@ import SwiftUI
 struct ItemListScreenView: View {
     @State var showingSheet = false
     @State var showingSheetEdit = false
+    @State var showingCalendar = false
+    
     @State var vm = ItemListViewModel(cacher: FileCache())
     
     @State var selectedItemForEditing: TodoItem?
+    
+    
     @Environment(\.presentationMode) private var presentationMode
     
     var body: some View {
         NavigationView {
             ZStack {
+                
                 List {
-                    Section{
+                    Section {
                         ForEach(vm.itemList) { item in
                             ToDoCell(item: item)
                                 .swipeActions(edge: .trailing) {
@@ -30,7 +35,7 @@ struct ItemListScreenView: View {
                                     })
                                 }
                                 .swipeActions(edge: .leading) {
-                                    Button(action: { vm.markDone(with: item.id) }) {
+                                    Button(action: { vm.toggleDone(with: item.id) }) {
                                         Label("Done", systemImage: "checkmark.circle.fill").tint(.blue)
                                     }
                                 }
@@ -42,14 +47,29 @@ struct ItemListScreenView: View {
                         })
                     }
                 header: {
-                    HStack {
-                        Text("Выполнено — \(vm.doneItemsCount)")
-                        Spacer()
-                        Button(action: {
-                            vm.isDoneShown.toggle()
-                        }, label: {
-                            Text(vm.isDoneShown == false ? "Показать": "Скрыть").font(.subheadline)
-                        })
+                    VStack(alignment: .leading) {
+                            NavigationLink {
+                                let calendarVM = CalendarViewModel(
+                                    model: FileCache(),
+                                    itemListViewModel: vm
+                                )
+                                let calendarWrapper = CalendarWrapper(calendarVM: calendarVM)
+                                calendarWrapper
+                                    .navigationTitle("Мои дела")
+                                    .navigationBarTitleDisplayMode(.inline)
+                                    .ignoresSafeArea()
+                            } label: {
+                                Image(systemName: "calendar")
+                            }
+                        HStack {
+                            Text("Выполнено — \(vm.doneItemsCount)")
+                            Spacer()
+                            Button(action: {
+                                vm.isDoneShown.toggle()
+                            }, label: {
+                                Text(vm.isDoneShown == false ? "Показать": "Скрыть").font(.subheadline)
+                            })
+                        }
                     }
                 }
                 .textCase(.none)
