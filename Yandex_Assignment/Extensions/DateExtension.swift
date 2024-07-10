@@ -9,4 +9,3 @@ extension Date {
         return "\(components.day!) \(cal.monthSymbols[components.month!-1])"
     }
 }
-

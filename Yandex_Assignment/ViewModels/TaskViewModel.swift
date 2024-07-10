@@ -10,11 +10,11 @@ enum ViewState {
 final class TaskViewModel: TaskViewModelManageable {
     var item: TodoItem
     var viewState: ViewState
-    weak var itemListVM:  ListViewManageable?
+    weak var itemListVM: ListViewManageable?
     var categories: [Category] = []
-    
+
     var categoryManager = CategoryManager()
-    
+
     init(
         item: TodoItem,
         itemListViewModel: ListViewManageable,
@@ -25,10 +25,10 @@ final class TaskViewModel: TaskViewModelManageable {
         self.viewState = viewState
         updateCategories()
     }
-    
+
     func add(newItem: TodoItem) {
         guard let itemListVM else {return}
-        
+
         switch viewState {
         case .editing:
             edit(newValue: newItem)
@@ -37,10 +37,10 @@ final class TaskViewModel: TaskViewModelManageable {
             itemListVM.save()
         }
     }
-    
+
     func delete() {
         guard let itemListVM else {return}
-        
+
         switch viewState {
         case .editing:
             itemListVM.delete(with: item.id)
@@ -50,17 +50,17 @@ final class TaskViewModel: TaskViewModelManageable {
         }
 
     }
-    
+
     func updateCategories() {
         categoryManager.load()
         categories = categoryManager.categories
     }
-    
+
     func edit(newValue: TodoItem) {
         guard let itemListVM else {return}
         switch viewState {
         case .editing:
-            
+
             // обновим дату редактирования
             let newVersion = TodoItem(
                 id: newValue.id,
@@ -81,21 +81,20 @@ final class TaskViewModel: TaskViewModelManageable {
     }
 }
 
-
 protocol TaskViewModelManageable: AnyObject {
     var item: TodoItem {get}
-    
+
     var categories: [Category] {get}
-    
+
     var viewState: ViewState {get}
-    
+
     var itemListVM: ListViewManageable? {get}
-    
+
     func add(newItem: TodoItem)
-    
+
     func delete()
-    
+
     func edit(newValue: TodoItem)
-    
+
     func updateCategories()
 }

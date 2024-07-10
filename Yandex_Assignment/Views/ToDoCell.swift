@@ -6,16 +6,16 @@ struct ToDoCell: View {
         case red
         case green
     }
-    
+
     var item: TodoItem
-    
+
     var body: some View {
         ZStack {
             HStack(spacing: 3) {
                 if item.isCompleted {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
-                    
+
                         .padding(.trailing, 10)
                 } else if item.priority == .important {
                     ZStack {
@@ -40,7 +40,7 @@ struct ToDoCell: View {
                         .lineLimit(3)
                         .strikethrough(item.isCompleted, color: .gray)
                         .foregroundColor(item.isCompleted == true ? .gray : .primary)
-                    if let deadline =  item.deadLineDate  {
+                    if let deadline =  item.deadLineDate {
                         HStack(spacing: .zero) {
                             Image(systemName: "calendar")
                             Text(deadline.getFormattedDateString())
@@ -54,7 +54,7 @@ struct ToDoCell: View {
             }
             VStack { Spacer()
                 Path { path in
-                    path.move(to: CGPoint(x: UIScreen.main.bounds.size.width - 100 , y: 0))
+                    path.move(to: CGPoint(x: UIScreen.main.bounds.size.width - 100, y: 0))
                     path.addLine(to: CGPoint(x: UIScreen.main.bounds.size.width - 100, y: 30))
                 }
                 .stroke(Color.colorFromHex(hex: item.hex ?? "000000"), lineWidth: 5)
@@ -66,7 +66,6 @@ struct ToDoCell: View {
         }
     }
 }
-
 
 #Preview {
     ToDoCell(

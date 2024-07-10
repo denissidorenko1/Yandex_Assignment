@@ -10,13 +10,13 @@ import Foundation
 final class CalendarViewModel {
     private let url: URL
     private let fileName: String
-    
+
     weak var itemListVM: ListViewManageable?
     let model: ItemCacher
-    
-    var itemsGroupedByDate: Dictionary<Date?, [TodoItem]> = [:]
+
+    var itemsGroupedByDate: [Date?: [TodoItem]] = [:]
     var sortedKeys: [Date?] = []
-    
+
     init(
         model: ItemCacher,
         itemListViewModel: ListViewManageable?,
@@ -28,7 +28,7 @@ final class CalendarViewModel {
         self.fileName = fileName
         self.itemListVM = itemListViewModel
     }
-    
+
     func fetch() {
         do {
             try model.loadAllItemsFromFile(with: url, fileName: fileName)
@@ -39,7 +39,7 @@ final class CalendarViewModel {
             print(error.localizedDescription)
         }
     }
-    
+
     func setItemDone(with id: String) {
         guard let item = model.items[id] else { return }
         let newItem = TodoItem(
@@ -60,7 +60,7 @@ final class CalendarViewModel {
             print(error)
         }
     }
-    
+
     func save() {
         do {
             try model.saveAllItemsToFile(with: url, filename: fileName)
@@ -69,7 +69,7 @@ final class CalendarViewModel {
             print(error)
         }
     }
-    
+
     // сортируем ключи для верхней части календаря
     private func sortDates() {
         var dates: Set<Date?> = []
@@ -82,14 +82,13 @@ final class CalendarViewModel {
             } else {
                 if left == nil {
                     return false
-                }
-                else {
+                } else {
                     return true
                 }
             }
         })
     }
-    
+
     // группируем даты по ключам, и сортируем их чтобы при обновлении не перемешивались
     private func groupDates() {
         itemsGroupedByDate = [:]
@@ -100,7 +99,7 @@ final class CalendarViewModel {
                 itemsGroupedByDate[nil, default: []].append(item.value)
             }
         }
-        
+
         for key in itemsGroupedByDate.keys {
             itemsGroupedByDate[key]! = itemsGroupedByDate[key]!.sorted(by: { left, right in
                 return left.id < right.id

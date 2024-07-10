@@ -3,30 +3,30 @@ import UIKit
 
 struct TaskView: View {
     //  вью-модель эерана
-    @State var vm: TaskViewModelManageable
-    
+    @State var taskVM: TaskViewModelManageable
+
     // вводимые данные
     @State var text: String
     @State var priority: TodoItem.Priority
     @State var deadLine: Date?
     @State var hexColor: String
-    
+
     // данные логики отображение
     @State var isDeadlineSet: Bool
     @State var isEditing: Bool
     @State var isCalendarShowed: Bool
-    
+
     @State var isAddingNewCategory: Bool = false
-    
+
     @State var slider: Double // позиция слайдер
     @State var color: Double // значение hue для hsv
-    
+
     @State var selectedCategory: Category
-    
+
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    
+
     // вычисляемое свойство для определения ориентации
     var isPortrait: Bool {
         if let verticalSizeClass, let horizontalSizeClass {
@@ -49,13 +49,13 @@ struct TaskView: View {
         }
         return false
     }
-    
+
     // заполняем данные, инжектим зависимость и режим использования вью
     init(
         item: TodoItem,
-        vm: ListViewManageable,
+        viewModel: ListViewManageable,
         viewState: ViewState
-        
+
     ) {
         self.text = item.text
         self.priority = item.priority
@@ -63,15 +63,13 @@ struct TaskView: View {
         self.isDeadlineSet = item.deadLineDate != nil
         self.isEditing = false
         self.isCalendarShowed = false
-        self.vm = TaskViewModel(item: item, itemListViewModel: vm, viewState: viewState)
+        self.taskVM = TaskViewModel(item: item, itemListViewModel: viewModel, viewState: viewState)
         self.hexColor = item.hex ?? "000000"
         self.slider = 0.5
         self.color = 0.5
         self.selectedCategory = item.category
     }
-    
 
-    
     //
     func constructSegments(priority: TodoItem.Priority) -> some View {
         switch priority {
@@ -83,7 +81,7 @@ struct TaskView: View {
             return AnyView(Image(systemName: "exclamationmark.2").symbolRenderingMode(.palette).foregroundStyle(.red))
         }
     }
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -109,7 +107,7 @@ struct TaskView: View {
                         hex: hexColor,
                         category: selectedCategory
                     )
-                    vm.add(newItem: inputedItem)
+                    taskVM.add(newItem: inputedItem)
                     presentationMode.wrappedValue.dismiss()
                 },
                        label: {
@@ -121,7 +119,7 @@ struct TaskView: View {
             if isPortrait {
                 List {
                     Section {
-                        TextField("Что нужно сделать?", text: $text, axis:.vertical)
+                        TextField("Что нужно сделать?", text: $text, axis: .vertical)
                             .lineLimit(4...15)
                             .scrollDismissesKeyboard(.immediately)
                     }
@@ -137,10 +135,10 @@ struct TaskView: View {
                             .pickerStyle(SegmentedPickerStyle())
                             .frame(maxWidth: 150)
                         }
-                        
+
                             HStack {
                                 Picker("Текущая категория: ", selection: $selectedCategory) {
-                                    ForEach(vm.categories, id: \.self) {
+                                    ForEach(taskVM.categories, id: \.self) {
                                         Text($0.name).tag($0.hashValue)
                                     }
                                 }
@@ -151,14 +149,11 @@ struct TaskView: View {
                             Text("Добавить категорию")
                         }
                         .sheet(isPresented: $isAddingNewCategory, onDismiss: {
-                            vm.updateCategories()
+                            taskVM.updateCategories()
                         }, content: {
                             AddNewCategoryView(color: 0.1, name: "")
                         })
 
-                        
-                        
-                        
                         VStack {
                             HStack {
                                 Text("Цвет: ")
@@ -172,10 +167,10 @@ struct TaskView: View {
                                     }
                                 Spacer()
                             }
-                            
+
                             GradientPalette(selectedColor: $color)
                                 .padding(5)
-                            Slider(value: $slider, in: 0.0001...1.0,  label: {Text("")})
+                            Slider(value: $slider, in: 0.0001...1.0, label: {Text("")})
                         }
                         .alignmentGuide(.listRowSeparatorLeading) { viewDimensions in
                             return viewDimensions[.leading]
@@ -190,7 +185,7 @@ struct TaskView: View {
                                 }
                             }
                             Toggle(isOn: $isDeadlineSet) {EmptyView()}
-                                .onChange(of: isDeadlineSet) { oldValue, newValue in
+                                .onChange(of: isDeadlineSet) { _, newValue in
                                     if newValue {
                                         deadLine = Date().addingTimeInterval(24 * 60 * 60)
                                     } else {
@@ -199,32 +194,33 @@ struct TaskView: View {
                                 }
                         }
                         if isCalendarShowed {
-                            DatePicker(selection: Binding(get: {deadLine ?? .now}, set: {deadLine = $0}), in: .now..., displayedComponents: .date, label: {})
+                            DatePicker(selection: Binding(get: {deadLine ?? .now}, set: {deadLine = $0}),
+                                       in: .now..., displayedComponents: .date, label: {})
                                 .datePickerStyle(.graphical)
                         }
                     }
-                    
+
                     Section {
                         HStack {
                             Spacer()
                             Button(action: {
-                                vm.delete()
+                                taskVM.delete()
                                 presentationMode.wrappedValue.dismiss()
                             }, label: {
                                 Text("Удалить")
                                     .foregroundStyle(.red)
                             })
                             Spacer()
-                            
+
                         }
                     }
-                    
+
                 }
                 .transition(.move(edge: .bottom))
                 .animation(.bouncy, value: isCalendarShowed)
                 Spacer()
             } else {
-                
+
                 HStack {
                     List {
                         Section {
@@ -251,9 +247,7 @@ struct TaskView: View {
                                     }
                                     .pickerStyle(SegmentedPickerStyle())
                                     .frame(maxWidth: 150)
-                                    
-                                    
-                                    
+
                                 }
                                 VStack {
                                     HStack {
@@ -265,24 +259,24 @@ struct TaskView: View {
                                             }
                                         Spacer()
                                     }
-                                    
+
                                     GradientPalette(selectedColor: $color)
                                         .padding(5)
-                                    Slider(value: $slider, in: 0.0001...1.0,  label: {Text("")})
-                                }                                
+                                    Slider(value: $slider, in: 0.0001...1.0, label: {Text("")})
+                                }
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text("Сделать до")
                                         if let date = deadLine {
                                             if isDeadlineSet {
                                                 Button(date.getFormattedDateString()) {
-                                                    
+
                                                 }
                                             }
                                         }
                                     }
                                     Toggle(isOn: $isDeadlineSet) {EmptyView()}
-                                        .onChange(of: isDeadlineSet) { oldValue, newValue in
+                                        .onChange(of: isDeadlineSet) { _, newValue in
                                             if newValue {
                                                 deadLine = Date().addingTimeInterval(24 * 60 * 60)
                                                 isDeadlineSet = newValue
@@ -293,7 +287,8 @@ struct TaskView: View {
                                         }
                                 }
                                 if isDeadlineSet {
-                                    DatePicker(selection: .constant(deadLine ?? .now), in: .now..., displayedComponents: .date, label: { })
+                                    DatePicker(selection: .constant(deadLine ?? .now), in: .now...,
+                                               displayedComponents: .date, label: { })
                                         .datePickerStyle(.graphical)
                                 }
                             }
@@ -301,7 +296,7 @@ struct TaskView: View {
                                 HStack {
                                     Spacer()
                                     Button(action: {
-                                        vm.delete()
+                                        taskVM.delete()
                                         presentationMode.wrappedValue.dismiss()
                                     }, label: {
                                         Text("Удалить")
@@ -327,7 +322,7 @@ struct TaskView: View {
             isCompleted: false,
             hex: nil
         ),
-        vm: ItemListViewModel(
+        viewModel: ItemListViewModel(
             cacher: FileCache()
         ),
         viewState: .adding
