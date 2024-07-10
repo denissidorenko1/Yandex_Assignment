@@ -146,7 +146,7 @@ extension TodoItem {
                 isCompleted: isCompleted,
                 creationDate: creationDate,
                 changeDate: changeDate,
-                hex: "FF00FF"
+                hex: nil
             )
             items.append(item)
         }

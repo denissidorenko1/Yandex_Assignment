@@ -133,6 +133,8 @@ final class ToDoItemTests: XCTestCase {
         TodoItem.writeCSVToFile(csv: csv, with: csvTestURL, filename: csvTestFileName)
         let deconstructed = TodoItem.readCSVFromFile(with: csvTestURL, fileName: csvTestFileName)!
         let parsed = TodoItem.parseCSV(with: deconstructed)[0]
+        print(item)
+        print(parsed)
         XCTAssert(item == parsed)
     }
 
