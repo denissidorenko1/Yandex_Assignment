@@ -43,7 +43,7 @@ final class FileCache: ItemCacher {
             in: .userDomainMask).first else { throw CacherErrors.invalidPath }
         let fileURL = documentsDirectory.appendingPathComponent(filename)
         // пишем Data в память
-        guard let _ = try? jsonData.write(to: fileURL, options: .atomic) else { throw CacherErrors.writeError }
+        guard ((try? jsonData.write(to: fileURL, options: .atomic)) != nil) else { throw CacherErrors.writeError }
     }
 
     func loadAllItemsFromFile(with fileURL: URL, fileName: String) throws {
