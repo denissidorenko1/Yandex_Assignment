@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+@_spi(Public) import MyPackage
 
 struct TaskView: View {
     //  вью-модель эерана
@@ -21,7 +22,7 @@ struct TaskView: View {
     @State var slider: Double // позиция слайдер
     @State var color: Double // значение hue для hsv
 
-    @State var selectedCategory: Category
+    @State var selectedCategory: Activity
 
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.verticalSizeClass) var verticalSizeClass

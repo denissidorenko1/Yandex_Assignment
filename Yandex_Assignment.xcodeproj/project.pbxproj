@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		27DF1538256783E37BE6B087 /* Pods_Yandex_Assignment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ACD0D5F5BD3FF683DF1012F /* Pods_Yandex_Assignment.framework */; };
+		923404C42C409C4000E922F6 /* MyPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 923404C32C409C4000E922F6 /* MyPackage */; };
 		924E50B02C2CAC09004BEE2B /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50AF2C2CAC09004BEE2B /* TaskView.swift */; };
 		924E50B52C2D869F004BEE2B /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50B42C2D869F004BEE2B /* DateExtension.swift */; };
 		924E50B72C2EC8F1004BEE2B /* ItemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50B62C2EC8F1004BEE2B /* ItemListViewModel.swift */; };
@@ -16,7 +17,6 @@
 		924E50BE2C2F1714004BEE2B /* ToDoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50BD2C2F1714004BEE2B /* ToDoCell.swift */; };
 		924E50C02C2F52B7004BEE2B /* GradientPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50BF2C2F52B7004BEE2B /* GradientPalette.swift */; };
 		924E50C22C2F7B59004BEE2B /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50C12C2F7B59004BEE2B /* ColorExtension.swift */; };
-		925880A32C384BAC00D99828 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925880A22C384BAC00D99828 /* Category.swift */; };
 		927962322C3884BD00B0C5D9 /* AddNewCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927962312C3884BD00B0C5D9 /* AddNewCategoryView.swift */; };
 		927962342C38888700B0C5D9 /* AddNewCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927962332C38888700B0C5D9 /* AddNewCategoryViewModel.swift */; };
 		928CD0532C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928CD0522C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift */; };
@@ -76,7 +76,6 @@
 		924E50BD2C2F1714004BEE2B /* ToDoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
 		924E50BF2C2F52B7004BEE2B /* GradientPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientPalette.swift; sourceTree = "<group>"; };
 		924E50C12C2F7B59004BEE2B /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
-		925880A22C384BAC00D99828 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		927962312C3884BD00B0C5D9 /* AddNewCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewCategoryView.swift; sourceTree = "<group>"; };
 		927962332C38888700B0C5D9 /* AddNewCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewCategoryViewModel.swift; sourceTree = "<group>"; };
 		928CD0522C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarView+TableViewExtensions.swift"; sourceTree = "<group>"; };
@@ -113,6 +112,7 @@
 				92A381972C4036AC00444484 /* CocoaLumberjack in Frameworks */,
 				92A381952C3F41DA00444484 /* CocoaLumberjackSwift in Frameworks */,
 				92A381992C4036CA00444484 /* CocoaLumberjackSwiftLogBackend in Frameworks */,
+				923404C42C409C4000E922F6 /* MyPackage in Frameworks */,
 				27DF1538256783E37BE6B087 /* Pods_Yandex_Assignment.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,7 +266,6 @@
 			children = (
 				92D33C3B2C24E5C100A6EED5 /* FileCache.swift */,
 				92D33C392C2496E400A6EED5 /* TodoItem.swift */,
-				925880A22C384BAC00D99828 /* Category.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -278,11 +277,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92D491302C24860F0081E4AB /* Build configuration list for PBXNativeTarget "Yandex_Assignment" */;
 			buildPhases = (
+				928CD05D2C3F29C400668AFC /* ShellScript */,
 				80670A580BD602D891BDFCA6 /* [CP] Check Pods Manifest.lock */,
 				92D491082C24860E0081E4AB /* Sources */,
 				92D491092C24860E0081E4AB /* Frameworks */,
 				92D4910A2C24860E0081E4AB /* Resources */,
-				928CD05D2C3F29C400668AFC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -293,6 +292,7 @@
 				92A381942C3F41DA00444484 /* CocoaLumberjackSwift */,
 				92A381962C4036AC00444484 /* CocoaLumberjack */,
 				92A381982C4036CA00444484 /* CocoaLumberjackSwiftLogBackend */,
+				923404C32C409C4000E922F6 /* MyPackage */,
 			);
 			productName = Yandex_Assignment;
 			productReference = 92D4910C2C24860E0081E4AB /* Yandex_Assignment.app */;
@@ -370,6 +370,7 @@
 			mainGroup = 92D491032C24860E0081E4AB;
 			packageReferences = (
 				92A381932C3F41DA00444484 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+				923404C22C409C4000E922F6 /* XCLocalSwiftPackageReference "MyPackage" */,
 			);
 			productRefGroup = 92D4910D2C24860E0081E4AB /* Products */;
 			projectDirPath = "";
@@ -491,7 +492,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SWIFTLINT_PATH=$(find Pods -name swiftlint | head -n 1)\nif [[ -n $SWIFTLINT_PATH ]]; then\n     \n    \"$SWIFTLINT_PATH\" --fix && \"$SWIFTLINT_PATH\"\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
+			shellScript = "SWIFTLINT_PATH=$(find Pods -name swiftlint | head -n 1)\nif [[ -n $SWIFTLINT_PATH ]]; then\n    \"$SWIFTLINT_PATH\"\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -503,7 +504,6 @@
 				92D491122C24860E0081E4AB /* ItemListScreenView.swift in Sources */,
 				924E50B52C2D869F004BEE2B /* DateExtension.swift in Sources */,
 				928CD0532C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift in Sources */,
-				925880A32C384BAC00D99828 /* Category.swift in Sources */,
 				92D780D82C35D9D300605FFA /* CalendarViewSUI.swift in Sources */,
 				92D33C3A2C2496E400A6EED5 /* TodoItem.swift in Sources */,
 				92D780DC2C36C95600605FFA /* CalendarViewDateCell.swift in Sources */,
@@ -862,6 +862,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		923404C22C409C4000E922F6 /* XCLocalSwiftPackageReference "MyPackage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = MyPackage;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		92A381932C3F41DA00444484 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -874,6 +881,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		923404C32C409C4000E922F6 /* MyPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MyPackage;
+		};
 		92A381942C3F41DA00444484 /* CocoaLumberjackSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 92A381932C3F41DA00444484 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;

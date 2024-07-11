@@ -1,5 +1,5 @@
 import SwiftUI
-
+@_spi(Public) import MyPackage
 struct AddNewCategoryView: View {
     @State var color: Double
     @State var name: String
@@ -33,7 +33,7 @@ struct AddNewCategoryView: View {
                         Button(action: {
                             if  name != "" {
                                 addNewCategoryVM.addNew(
-                                    with: Category(
+                                    with: Activity(
                                         name: name,
                                         hexColor: Color(hue: color, saturation: 1, brightness: 1).hex()
                                     ))

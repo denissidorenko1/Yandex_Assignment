@@ -1,5 +1,6 @@
 import Foundation
 import CocoaLumberjackSwift
+@_spi(Public) import MyPackage
 
 // состояние работы с вью
 enum ViewState {
@@ -12,7 +13,7 @@ final class TaskViewModel: TaskViewModelManageable {
     var item: TodoItem
     var viewState: ViewState
     weak var itemListVM: ListViewManageable?
-    var categories: [Category] = []
+    var categories: [Activity] = []
 
     var categoryManager = CategoryManager()
 
@@ -98,7 +99,7 @@ final class TaskViewModel: TaskViewModelManageable {
 protocol TaskViewModelManageable: AnyObject {
     var item: TodoItem {get}
 
-    var categories: [Category] {get}
+    var categories: [Activity] {get}
 
     var viewState: ViewState {get}
 

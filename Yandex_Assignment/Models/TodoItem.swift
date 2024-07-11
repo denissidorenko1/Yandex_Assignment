@@ -1,5 +1,5 @@
 import Foundation
-
+@_spi(Public) import MyPackage
 // MARK: - структура ToDoItem
 struct TodoItem {
     enum Priority: String {
@@ -16,7 +16,7 @@ struct TodoItem {
     let creationDate: Date
     let changeDate: Date?
     let hex: String?
-    let category: Category
+    let category: Activity
 
     init(
         id: String = UUID().uuidString,
@@ -27,7 +27,7 @@ struct TodoItem {
         creationDate: Date = .now,
         changeDate: Date? = nil,
         hex: String?,
-        category: Category = Category(name: "Другое", hexColor: "FFFFFF")
+        category: Activity = Activity(name: "Другое", hexColor: "FFFFFF")
     ) {
         self.id = id
         self.text = text
@@ -88,7 +88,7 @@ extension TodoItem {
             creationDate: created,
             changeDate: changeDate,
             hex: hex,
-            category: Category(name: categoryName, hexColor: categoryColor)
+            category: Activity(name: categoryName, hexColor: categoryColor)
         )
     }
 

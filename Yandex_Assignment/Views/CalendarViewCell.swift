@@ -1,6 +1,6 @@
 import UIKit
 import SwiftUI
-
+@_spi(Public) import MyPackage
 class CalendarViewItemCell: UITableViewCell {
     var sectionIndex: Int?
     let label = UILabel()
