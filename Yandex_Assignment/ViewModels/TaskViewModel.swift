@@ -1,4 +1,5 @@
 import Foundation
+import CocoaLumberjackSwift
 
 // состояние работы с вью
 enum ViewState {
@@ -23,29 +24,36 @@ final class TaskViewModel: TaskViewModelManageable {
         self.item = item
         self.itemListVM = itemListViewModel
         self.viewState = viewState
+        DDLogInfo("\(Self.self) инициализировано с состоянием \(viewState)")
         updateCategories()
     }
 
     func add(newItem: TodoItem) {
         guard let itemListVM else {return}
-
         switch viewState {
         case .editing:
+            DDLogInfo("\(Self.self) изменяет данные с айтемом \(newItem)")
             edit(newValue: newItem)
         case .adding:
+            DDLogInfo("\(Self.self) добавляет данные с айтемом \(newItem)")
             itemListVM.add(newItem: newItem)
             itemListVM.save()
         }
     }
 
     func delete() {
-        guard let itemListVM else {return}
+        guard let itemListVM else {
+            DDLogWarn("ItemListVM не инициализирован")
+            return
+        }
 
         switch viewState {
         case .editing:
             itemListVM.delete(with: item.id)
             itemListVM.save()
+            DDLogInfo("\(Self.self) удаляет айтем с id \(item.id)")
         case .adding:
+            DDLogWarn("\(Self.self) пытается удалить данные из режима добавления, это так не должно рабоать")
             return
         }
 
@@ -54,10 +62,14 @@ final class TaskViewModel: TaskViewModelManageable {
     func updateCategories() {
         categoryManager.load()
         categories = categoryManager.categories
+        DDLogInfo("Обновление данных в \(Self.self)")
     }
 
     func edit(newValue: TodoItem) {
-        guard let itemListVM else {return}
+        guard let itemListVM else {
+            DDLogWarn("ItemListVM не инициализирован")
+            return
+        }
         switch viewState {
         case .editing:
 
@@ -75,7 +87,9 @@ final class TaskViewModel: TaskViewModelManageable {
             )
             itemListVM.update(with: item.id, newVersion: newVersion)
             itemListVM.save()
+            DDLogInfo("\(Self.self) редактирует данные с новым айтемом \(newValue)")
         case .adding:
+            DDLogWarn("\(Self.self) пытается изменить данные из режима добавления, это так не должно работать")
             return
         }
     }

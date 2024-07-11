@@ -1,4 +1,5 @@
 import Foundation
+import CocoaLumberjackSwift
 
 @Observable
 final class ItemListViewModel: ListViewManageable {
@@ -17,6 +18,7 @@ final class ItemListViewModel: ListViewManageable {
         self.url = url
         self.fileName = fileName
         self.doneItemsCount = 0
+        DDLogInfo("\(Self.self) инициализирован")
     }
 
     func fetch() {
@@ -34,7 +36,9 @@ final class ItemListViewModel: ListViewManageable {
                     left.creationDate > right.creationDate
                 })
             }
+            DDLogInfo("Items fetched from \(Self.self)")
         } catch {
+            DDLogError("Fetch failed from \(Self.self)")
             print(error)
         }
     }
@@ -54,7 +58,9 @@ final class ItemListViewModel: ListViewManageable {
         do {
             try cacher.editItem(with: id, newVersion: newItem)
             save()
+            DDLogInfo("Статус изменен в \(Self.self) с \(id) id")
         } catch {
+            DDLogError("Изменение кэшера и сохранение в \(Self.self) упало")
             print(error)
         }
 
@@ -64,7 +70,9 @@ final class ItemListViewModel: ListViewManageable {
         do {
             try cacher.addNewItem(with: newItem)
             save()
+            DDLogInfo("Тудушка \(newItem) сохранена из \(Self.self)")
         } catch {
+            DDLogError("Добавление и сохранение в \(Self.self) упало")
             print(error)
         }
 
@@ -79,7 +87,9 @@ final class ItemListViewModel: ListViewManageable {
         do {
             try cacher.editItem(with: id, newVersion: newVersion)
             save()
+            DDLogInfo("Тудушка обновлена из \(Self.self) с новой версией \(newVersion)")
         } catch {
+            DDLogError("Обновление и сохранение упало в \(Self.self)")
             print(error)
         }
 
@@ -89,7 +99,9 @@ final class ItemListViewModel: ListViewManageable {
         do {
             try cacher.saveAllItemsToFile(with: url, filename: fileName)
             fetch()
+            DDLogInfo("Все тудушки сохранены и перезагружены в \(Self.self)")
         } catch {
+            DDLogError("Сохранение и обновление тудушек упало в \(Self.self)")
             print(error)
         }
     }

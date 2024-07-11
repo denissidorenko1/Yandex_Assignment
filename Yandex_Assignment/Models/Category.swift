@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import UIKit
+import CocoaLumberjackSwift
 
 struct Category: Codable {
     let name: String
@@ -28,11 +29,14 @@ final class CategoryManager {
 
     func add(with category: Category) {
         categories.append(category)
+        DDLogInfo("Добавлена категория в \(Self.self)")
     }
 
     func save() {
         if let encodedCategories = try? encoder.encode(categories) {
             UserDefaults.standard.set(encodedCategories, forKey: CategoryManager.categoryKey)
+        } else {
+            DDLogWarn("В \(Self.self) не сработало сохранение")
         }
     }
 
@@ -40,10 +44,13 @@ final class CategoryManager {
         if let savedCategories = UserDefaults.standard.data(forKey: CategoryManager.categoryKey),
            let decodedCategories = try? decoder.decode([Category].self, from: savedCategories) {
             categories = decodedCategories
+        } else {
+            DDLogWarn("В \(Self.self) не сработала загрузка")
         }
     }
 
     func deleteAll() {
         UserDefaults.standard.removeObject(forKey: CategoryManager.categoryKey)
+        DDLogInfo("Все данные о категориях удалены")
     }
 }

@@ -1,11 +1,5 @@
-//
-//  CalendarViewModel.swift
-//  Yandex_Assignment
-//
-//  Created by Denis on 04.07.2024.
-//
-
 import Foundation
+import CocoaLumberjackSwift
 
 final class CalendarViewModel {
     private let url: URL
@@ -27,6 +21,7 @@ final class CalendarViewModel {
         self.url = url
         self.fileName = fileName
         self.itemListVM = itemListViewModel
+        DDLogInfo("\(Self.self) инициализирован с моделью \(model.self) и itemListVM \((itemListViewModel.self) ?? "nil")")
     }
 
     func fetch() {
@@ -36,7 +31,7 @@ final class CalendarViewModel {
             sortDates()
             groupDates()
         } catch {
-            print(error.localizedDescription)
+            DDLogError("Обновление \(Self.self) упало с ошибкой \(error.localizedDescription)")
         }
     }
 
@@ -57,7 +52,7 @@ final class CalendarViewModel {
             try model.editItem(with: id, newVersion: newItem)
             save()
         } catch {
-            print(error)
+            DDLogError("Изменение выполнения айтема с id \(id) в \(Self.self) упало с ошибкой \(error.localizedDescription)")
         }
     }
 
@@ -66,7 +61,7 @@ final class CalendarViewModel {
             try model.saveAllItemsToFile(with: url, filename: fileName)
             fetch()
         } catch {
-            print(error)
+            DDLogError("Сохранения в \(Self.self) упало с ошибкой \(error.localizedDescription)")
         }
     }
 

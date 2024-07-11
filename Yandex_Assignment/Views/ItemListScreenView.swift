@@ -1,4 +1,5 @@
 import SwiftUI
+import CocoaLumberjackSwift
 
 struct ItemListScreenView: View {
     @State var showingSheet = false
@@ -103,6 +104,7 @@ struct ItemListScreenView: View {
             }
         }
         .onAppear {
+            DDLogInfo("Обновляем данные в списке \(Self.self)")
             itemListVM.fetch()
         }
     }

@@ -1,4 +1,5 @@
 import Foundation
+import CocoaLumberjackSwift
 
 @Observable
 final class AddNewCategoryViewModel {
@@ -11,5 +12,6 @@ final class AddNewCategoryViewModel {
         model.load()
         model.add(with: category)
         model.save()
+        DDLogInfo("Добавлена новая категория \(category)")
     }
 }
