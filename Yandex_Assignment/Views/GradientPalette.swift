@@ -1,12 +1,13 @@
 import SwiftUI
 
-// гиперкостыль: найти png с hsv шкалой, запихать ее в ассеты, передать как изображение во вью, считывать geometryReader-ом положение касания, вычислять отношение к экрану и считать это за hue! 
+/*  гиперкостыль: найти png с hsv шкалой, запихать ее в ассеты, передать как изображение во вью,
+ считывать geometryReader-ом положение касания, вычислять отношение к экрану и считать это за hue! */
 struct GradientPalette: View {
     @Binding var selectedColor: Double
-    
+
     var body: some View {
         GeometryReader { geometry in
-                ZStack(alignment:.bottom) {
+                ZStack(alignment: .bottom) {
                     Image("hsvPalette", label: Text(""))
                         .resizable()
                         .edgesIgnoringSafeArea(.all)
@@ -20,5 +21,5 @@ struct GradientPalette: View {
         }
         .clipShape(RoundedRectangle(cornerRadius: 15))
     }
-        
+
 }

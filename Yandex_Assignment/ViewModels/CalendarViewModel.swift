@@ -1,22 +1,16 @@
-//
-//  CalendarViewModel.swift
-//  Yandex_Assignment
-//
-//  Created by Denis on 04.07.2024.
-//
-
 import Foundation
+import CocoaLumberjackSwift
 
 final class CalendarViewModel {
     private let url: URL
     private let fileName: String
-    
+
     weak var itemListVM: ListViewManageable?
     let model: ItemCacher
-    
-    var itemsGroupedByDate: Dictionary<Date?, [TodoItem]> = [:]
+
+    var itemsGroupedByDate: [Date?: [TodoItem]] = [:]
     var sortedKeys: [Date?] = []
-    
+
     init(
         model: ItemCacher,
         itemListViewModel: ListViewManageable?,
@@ -27,8 +21,9 @@ final class CalendarViewModel {
         self.url = url
         self.fileName = fileName
         self.itemListVM = itemListViewModel
+        DDLogInfo("\(Self.self) инициализирован с моделью \(model.self) и itemListVM \((itemListViewModel.self) ?? "nil")")
     }
-    
+
     func fetch() {
         do {
             try model.loadAllItemsFromFile(with: url, fileName: fileName)
@@ -36,10 +31,10 @@ final class CalendarViewModel {
             sortDates()
             groupDates()
         } catch {
-            print(error.localizedDescription)
+            DDLogError("Обновление \(Self.self) упало с ошибкой \(error.localizedDescription)")
         }
     }
-    
+
     func setItemDone(with id: String) {
         guard let item = model.items[id] else { return }
         let newItem = TodoItem(
@@ -57,19 +52,19 @@ final class CalendarViewModel {
             try model.editItem(with: id, newVersion: newItem)
             save()
         } catch {
-            print(error)
+            DDLogError("Изменение выполнения айтема с id \(id) в \(Self.self) упало с ошибкой \(error.localizedDescription)")
         }
     }
-    
+
     func save() {
         do {
             try model.saveAllItemsToFile(with: url, filename: fileName)
             fetch()
         } catch {
-            print(error)
+            DDLogError("Сохранения в \(Self.self) упало с ошибкой \(error.localizedDescription)")
         }
     }
-    
+
     // сортируем ключи для верхней части календаря
     private func sortDates() {
         var dates: Set<Date?> = []
@@ -82,14 +77,13 @@ final class CalendarViewModel {
             } else {
                 if left == nil {
                     return false
-                }
-                else {
+                } else {
                     return true
                 }
             }
         })
     }
-    
+
     // группируем даты по ключам, и сортируем их чтобы при обновлении не перемешивались
     private func groupDates() {
         itemsGroupedByDate = [:]
@@ -100,7 +94,7 @@ final class CalendarViewModel {
                 itemsGroupedByDate[nil, default: []].append(item.value)
             }
         }
-        
+
         for key in itemsGroupedByDate.keys {
             itemsGroupedByDate[key]! = itemsGroupedByDate[key]!.sorted(by: { left, right in
                 return left.id < right.id

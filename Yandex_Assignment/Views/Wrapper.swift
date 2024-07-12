@@ -3,7 +3,7 @@ import UIKit
 
 struct CalendarWrapper: UIViewControllerRepresentable {
     let calendarVM: CalendarViewModel
-    
+
     typealias UIViewControllerType = CalendarView
 
     func makeUIViewController(context: Context) -> CalendarView {
@@ -13,7 +13,6 @@ struct CalendarWrapper: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ uiViewController: CalendarView, context: Context) {
-        
+
     }
 }
-

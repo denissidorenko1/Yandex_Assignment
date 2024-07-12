@@ -6,9 +6,9 @@ class CalendarView: UIViewController {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     let addNewButton =  UIButton()
     let separator = UILabel()
-    
+
     var viewModel: CalendarViewModel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -23,14 +23,12 @@ class CalendarView: UIViewController {
         setupStyles()
         viewModel.fetch()
     }
-    
-    
-    
+
     private func setupStyles() {
         view.backgroundColor = .backPrimary
         collectionView.backgroundColor = .backPrimary
         tableView.backgroundColor = .backPrimary
-        
+
         addNewButton.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
         addNewButton.imageView?.contentMode = .scaleAspectFill
         addNewButton.contentVerticalAlignment = .fill
@@ -39,17 +37,17 @@ class CalendarView: UIViewController {
         addNewButton.layer.shadowOffset = CGSize(width: 0, height: 5)
         addNewButton.layer.shadowRadius = 10
         addNewButton.layer.shadowOpacity = 0.5
-        
+
         tableView.showsHorizontalScrollIndicator = false
         tableView.showsVerticalScrollIndicator = false
-        
+
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.allowsMultipleSelection = false
-        
+
         separator.backgroundColor = .separator
     }
-    
+
     private func setupActions() {
         addNewButton.addAction(UIAction { [weak self] _ in
             guard let itemListVM = self?.viewModel.itemListVM else { return }
@@ -61,14 +59,14 @@ class CalendarView: UIViewController {
                         isCompleted: false,
                         hex: nil
                     ),
-                    vm: itemListVM,
+                    viewModel: itemListVM,
                     viewState: .adding
                 )
             )
             self?.navigationController?.pushViewController(hostingController, animated: true)
         }, for: .touchUpInside)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.fetch()
@@ -76,18 +74,18 @@ class CalendarView: UIViewController {
         collectionView.reloadData()
         selectTapped(didSelectItemAt: IndexPath(row: 0, section: 0))
     }
-    
+
     private func setupConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addNewButton.translatesAutoresizingMaskIntoConstraints = false
         separator.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             view.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: tableView.trailingAnchor),
             view.bottomAnchor.constraint(equalTo: tableView.bottomAnchor),
-            
+
             view.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
             view.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
             view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: collectionView.topAnchor),
@@ -95,18 +93,17 @@ class CalendarView: UIViewController {
             separator.heightAnchor.constraint(equalToConstant: 1),
             separator.bottomAnchor.constraint(equalTo: tableView.topAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: 80),
-            
-            
+
             addNewButton.heightAnchor.constraint(equalToConstant: 44),
             addNewButton.widthAnchor.constraint(equalToConstant: 44),
             addNewButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             addNewButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -75),
-            
+
             separator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            separator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            separator.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
-    
+
     private func setupCollectionViewLayout() {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 5
@@ -116,18 +113,18 @@ class CalendarView: UIViewController {
         layout.itemSize = CGSize(width: 70, height: 70)
         collectionView.collectionViewLayout = layout
     }
-    
+
     private func setupCollectionView() {
         setupCollectionViewLayout()
         collectionView.delegate = self
         collectionView.dataSource = self
     }
-    
+
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
     }
-    
+
     private func registerCells() {
         tableView.register(CalendarViewItemCell.self, forCellReuseIdentifier: CalendarViewItemCell.ReuseId)
         collectionView.register(CalendarViewDateCell.self, forCellWithReuseIdentifier: CalendarViewDateCell.ReuseId)

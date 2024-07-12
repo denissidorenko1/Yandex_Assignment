@@ -1,0 +1,6 @@
+framework module Pods_Yandex_Assignment_Yandex_AssignmentUITests {
+  umbrella header "Pods-Yandex_Assignment-Yandex_AssignmentUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

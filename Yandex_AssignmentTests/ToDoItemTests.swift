@@ -5,27 +5,27 @@ final class ToDoItemTests: XCTestCase {
     // путь и название файла для тестирования чтения CSV
     let csvTestURL = URL(fileURLWithPath: "")
     let csvTestFileName = "testFile.csv"
-    
+
     // чистим файл с .csv
     override func tearDownWithError() throws {
-        let documentsDirectory = FileManager.default.urls(for:.documentDirectory, in: .userDomainMask).first!
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileURL = documentsDirectory.appendingPathComponent(csvTestFileName)
-        
+
         try? FileManager.default.removeItem(at: fileURL)
     }
-    
+
     // валидация JSON
     func testValidateJSON() {
         let id = "qwerty"
         let creationDate = Date.now
         let item = TodoItem(id: id, text: "text", priority: .important, isCompleted: true, creationDate: creationDate, hex: nil)
-        
+
         let json = item.json
         guard let data = json as? Data else { return }
         guard let deserialised = try? JSONSerialization.jsonObject(with: data) as? [String: String] else { return  }
         XCTAssert(JSONSerialization.isValidJSONObject(deserialised))
     }
-    
+
     // перебиваем ToDoItem в JSON, конвертируем обратно и проверяем их эквивалентность
     func testDecodedEqualsOriginal() {
         let id: String = "1234"
@@ -33,7 +33,7 @@ final class ToDoItemTests: XCTestCase {
         let priority: TodoItem.Priority = .usual
         let isCompleted: Bool = true
         let creationDate: Date = .now
-        
+
         let initialItem = TodoItem(
             id: id,
             text: text,
@@ -42,12 +42,12 @@ final class ToDoItemTests: XCTestCase {
             creationDate: creationDate,
             hex: nil
         )
-        
+
         let json = initialItem.json
         guard let parsed = TodoItem.parse(json: json) else { return }
         XCTAssert(initialItem == parsed)
     }
-    
+
     // проверяем, что поле priority заполнено в JSON-е при .important
     func testImportant() {
         let item = TodoItem(
@@ -57,12 +57,12 @@ final class ToDoItemTests: XCTestCase {
             creationDate: .now,
             hex: nil
         )
-        
+
         guard let jsonData = item.json as? Data else {return}
         guard let deserialised = try? JSONSerialization.jsonObject(with: jsonData) as? [String: String] else { return  }
         let importanceKey = TodoItem.FieldDescriptor.priority.rawValue
         XCTAssert(deserialised[importanceKey] != nil)
-        
+
     }
     // проверяем, что поле priority заполнено в JSON-е при .unimportant
     func testUnimportant() {
@@ -73,13 +73,13 @@ final class ToDoItemTests: XCTestCase {
             creationDate: .now,
             hex: nil
         )
-        
+
         guard let jsonData = item.json as? Data else {return}
         guard let deserialised = try? JSONSerialization.jsonObject(with: jsonData) as? [String: String] else { return  }
         let importanceKey = TodoItem.FieldDescriptor.priority.rawValue
         XCTAssert(deserialised[importanceKey] != nil)
     }
-    
+
     // проверяем, что поле priority не заполнено в JSON-е при .usual
     func testUsualImportance() {
         let item = TodoItem(
@@ -91,15 +91,13 @@ final class ToDoItemTests: XCTestCase {
             changeDate: .now,
             hex: nil
         )
-        
+
         guard let jsonData = item.json as? Data else {return}
         guard let deserialised = try? JSONSerialization.jsonObject(with: jsonData) as? [String: String] else { return  }
         let importanceKey = TodoItem.FieldDescriptor.priority.rawValue
         XCTAssert(deserialised[importanceKey] == nil)
     }
 
-    
-    
     // проверяем что файл .csv создается
     func testCSVCreation() {
         let item = TodoItem(
@@ -111,14 +109,14 @@ final class ToDoItemTests: XCTestCase {
             changeDate: .now,
             hex: nil
         )
-        
+
         let csv = TodoItem.constructCompleteCSV(items: [item])
         TodoItem.writeCSVToFile(csv: csv, with: csvTestURL, filename: csvTestFileName)
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileURL = documentsDirectory.appendingPathComponent(csvTestFileName)
         XCTAssert(FileManager.default.fileExists(atPath: fileURL.path))
     }
-    
+
     // перебиваем ToDoItem в .csv, конвертируем обратно и проверяем их эквивалентность
     func testCSVEqualsOriginal() {
         let item = TodoItem(
@@ -130,14 +128,16 @@ final class ToDoItemTests: XCTestCase {
             changeDate: .now,
             hex: nil
         )
-        
+
         let csv = TodoItem.constructCompleteCSV(items: [item])
         TodoItem.writeCSVToFile(csv: csv, with: csvTestURL, filename: csvTestFileName)
         let deconstructed = TodoItem.readCSVFromFile(with: csvTestURL, fileName: csvTestFileName)!
         let parsed = TodoItem.parseCSV(with: deconstructed)[0]
+        print(item)
+        print(parsed)
         XCTAssert(item == parsed)
     }
-    
+
 }
 
 // расширение чтобы можно было сравнивать item-ы: например, до конвертации и после
@@ -178,7 +178,7 @@ fileprivate extension TodoItem {
             }
             return csvRow
         }
-        
+
         static func constructCompleteCSV(items: [TodoItem]) -> String {
             var csvData = "id;text;priority;deadLineDate;isCompleted;creationDate;changeDate\n"
             for item in items {
@@ -186,23 +186,22 @@ fileprivate extension TodoItem {
             }
             return csvData
         }
-        
-        
+
     static func writeCSVToFile(csv: String, with fileURL: URL, filename: String) {
             do {
-                guard let documentsDirectory = FileManager.default.urls(for:.documentDirectory,
-                    in:.userDomainMask).first else { return }
+                guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory,
+                    in: .userDomainMask).first else { return }
                 let fileURL = documentsDirectory.appendingPathComponent(filename)
-    
+
                 let csvData = csv.data(using: .utf8)!
                 try csvData.write(to: fileURL)
             } catch {
-    
+
             }
         }
-        
+
         static func readCSVFromFile(with fileURL: URL, fileName: String) -> String? {
-            guard let documentsDirectory = FileManager.default.urls(for:.documentDirectory, in: .userDomainMask)
+            guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
                 .first else {  return nil }
             let fileURL = documentsDirectory.appendingPathComponent(fileName)
             guard let str = try? String(contentsOf: fileURL, encoding: .utf8) else { return nil }
