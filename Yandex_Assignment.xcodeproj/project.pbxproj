@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		27DF1538256783E37BE6B087 /* Pods_Yandex_Assignment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ACD0D5F5BD3FF683DF1012F /* Pods_Yandex_Assignment.framework */; };
 		923404C42C409C4000E922F6 /* MyPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 923404C32C409C4000E922F6 /* MyPackage */; };
+		923404C62C41415F00E922F6 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923404C52C41415F00E922F6 /* URLSession.swift */; };
+		923404C82C41457700E922F6 /* NetworkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923404C72C41457700E922F6 /* NetworkingView.swift */; };
 		924E50B02C2CAC09004BEE2B /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50AF2C2CAC09004BEE2B /* TaskView.swift */; };
 		924E50B52C2D869F004BEE2B /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50B42C2D869F004BEE2B /* DateExtension.swift */; };
 		924E50B72C2EC8F1004BEE2B /* ItemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50B62C2EC8F1004BEE2B /* ItemListViewModel.swift */; };
@@ -68,6 +70,8 @@
 		6ACD0D5F5BD3FF683DF1012F /* Pods_Yandex_Assignment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yandex_Assignment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79BEC142E592A50ACB7A6CFD /* Pods_Yandex_AssignmentTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yandex_AssignmentTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AC8F0579A7502BE84ACEEBD /* Pods_Yandex_Assignment_Yandex_AssignmentUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yandex_Assignment_Yandex_AssignmentUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		923404C52C41415F00E922F6 /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
+		923404C72C41457700E922F6 /* NetworkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingView.swift; sourceTree = "<group>"; };
 		924E50AF2C2CAC09004BEE2B /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		924E50B42C2D869F004BEE2B /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		924E50B62C2EC8F1004BEE2B /* ItemListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListViewModel.swift; sourceTree = "<group>"; };
@@ -164,6 +168,7 @@
 			children = (
 				924E50B42C2D869F004BEE2B /* DateExtension.swift */,
 				924E50C12C2F7B59004BEE2B /* ColorExtension.swift */,
+				923404C52C41415F00E922F6 /* URLSession.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -246,6 +251,7 @@
 				927962312C3884BD00B0C5D9 /* AddNewCategoryView.swift */,
 				928CD0522C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift */,
 				928CD0542C38B0CD00668AFC /* CalendarView+CollectionViewExtensions.swift */,
+				923404C72C41457700E922F6 /* NetworkingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -510,6 +516,8 @@
 				924E50C22C2F7B59004BEE2B /* ColorExtension.swift in Sources */,
 				92D781032C36D75000605FFA /* CalendarViewModel.swift in Sources */,
 				92D33C3C2C24E5C100A6EED5 /* FileCache.swift in Sources */,
+				923404C62C41415F00E922F6 /* URLSession.swift in Sources */,
+				923404C82C41457700E922F6 /* NetworkingView.swift in Sources */,
 				92D780DA2C35DAE800605FFA /* CalendarViewCell.swift in Sources */,
 				924E50B02C2CAC09004BEE2B /* TaskView.swift in Sources */,
 				927962322C3884BD00B0C5D9 /* AddNewCategoryView.swift in Sources */,
@@ -620,6 +628,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 			};
 			name = Debug;
 		};
@@ -675,6 +684,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

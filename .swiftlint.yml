@@ -1,6 +1,8 @@
 
 disabled_rules: # rule identifiers to exclude from running
   - colon
+  - trailing_whitespace
+  - comment_spacing
   - comma
   - control_statement
   #- identifier_name #rule for checking variable conditions (Upper case , lower case , underscore )
