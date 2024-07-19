@@ -30,14 +30,9 @@ final class ItemListViewModel: ListViewManageable, Sendable {
     }
 
     func fetch() {
-        print("fetching")
         do {
             if isDoneShown {
                 try cacher.loadAllItemsFromFile(with: url, fileName: fileName)
-//                doneItemsCount = cacher.items.values.filter {$0.isCompleted == true}.count
-//                itemList = cacher.items.values.map {$0}.sorted(by: { left, right in
-//                    left.creationDate > right.creationDate
-//                })
                 Task {
                     let allItems = try await networkHandler.getAll()
                     doneItemsCount = allItems.filter {$0.isCompleted == true}.count
@@ -54,10 +49,6 @@ final class ItemListViewModel: ListViewManageable, Sendable {
                         left.creationDate > right.creationDate
                     })
                 }
-//                doneItemsCount = cacher.items.values.filter {$0.isCompleted == true}.count
-//                itemList = cacher.items.values.map {$0}.filter {$0.isCompleted == false}.sorted(by: { left, right in
-//                    left.creationDate > right.creationDate
-//                })
             }
             DDLogInfo("Items fetched from \(Self.self)")
         } catch {
@@ -73,14 +64,12 @@ final class ItemListViewModel: ListViewManageable, Sendable {
             itemList = allData
         } catch {
             print(error)
-            DDLogError("Network request failed from \(Self.self)")
+            DDLogError("Network request failed from \(Self.self) with error \(error)")
         }
     }
 
     func toggleDone(with id: String)  {
-        print("done toggled")
-        guard let item = cacher.items[id] else { 
-            print("no id in cacher");  return }
+        guard let item = cacher.items[id] else {  return }
         let newItem = TodoItem(
             id: item.id,
             text: item.text,
@@ -94,7 +83,6 @@ final class ItemListViewModel: ListViewManageable, Sendable {
         do {
             try cacher.editItem(with: id, newVersion: newItem)
             Task {
-//                print("trying to toggle")
                 try await networkHandler.editItem(with: newItem)
                 save()
                 DDLogInfo("Статус изменен в \(Self.self) с \(id) id")
@@ -108,7 +96,6 @@ final class ItemListViewModel: ListViewManageable, Sendable {
     }
 
     func add(newItem: TodoItem) {
-        print("added")
         do {
             try cacher.addNewItem(with: newItem)
             Task {
@@ -124,28 +111,19 @@ final class ItemListViewModel: ListViewManageable, Sendable {
     }
 
     func delete(with id: String) {
-        print("deleting")
         cacher.deleteItem(with: id)
-        do {
             Task {
                 try await networkHandler.deleteByID(with: id)
             }
-        } catch {
-            print("ошибка удаления")
-            DDLogError("Удаление \(Self.self) упало")
-        }
         save()
     }
 
     func update(with id: String, newVersion: TodoItem) {
-        print("updating")
         do {
             try cacher.editItem(with: id, newVersion: newVersion)
             Task {
-                // тут выпало исключение
                 try await networkHandler.editItem(with: newVersion)
             }
-            
             save()
             DDLogInfo("Тудушка обновлена из \(Self.self) с новой версией \(newVersion)")
         } catch {
@@ -156,13 +134,8 @@ final class ItemListViewModel: ListViewManageable, Sendable {
     }
 
     func save() {
-        print("saving")
         do {
             try cacher.saveAllItemsToFile(with: url, filename: fileName)
-            // если пытаться обновить все то упадет добавление
-//            Task {
-//                try await networkHandler.updateAll(with: itemList)
-//            }
             fetch()
             DDLogInfo("Все тудушки сохранены и перезагружены в \(Self.self)")
         } catch {

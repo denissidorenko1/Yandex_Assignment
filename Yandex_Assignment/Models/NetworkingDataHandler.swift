@@ -1,6 +1,6 @@
 import Foundation
 actor NetworkingDataHandler {
-    var items: [MockItem] = []
+    var items: [NetworkingItem] = []
     
     var isDirty: Bool = false
     
@@ -21,7 +21,7 @@ actor NetworkingDataHandler {
     
     
     func getAll() async throws -> [TodoItem] {
-//        isDirty = true
+        isDirty = true
         items = try await service.getList()
         isDirty = false
         return convertMockToToDoItem(with: items)
@@ -45,23 +45,16 @@ actor NetworkingDataHandler {
     }
     
     func editItem(with newVersion: TodoItem) async throws -> [TodoItem] {
-        print("edit 1")
         guard !isDirty else {
             try await handleOutOfSync()
-            print("edit 2")
             return convertMockToToDoItem(with: items)
         }
-        print("edit 3")
         let newItem = convertSingleToDo(with: newVersion)
-        print("edit 4")
         let newMock = try await service.editItem(with: newItem) // - вот отсюда ошибки лезут
         if let index = items.firstIndex(where: { $0.id == newMock.id }) {
-            print("edit 5")
             items[index] = newMock
             return convertMockToToDoItem(with: items)
         } else {
-            print("edit 6")
-//            isDirty = true
             return convertMockToToDoItem(with: items)
         }
     }
@@ -82,37 +75,39 @@ actor NetworkingDataHandler {
         return try await getAll()
     }
     
-    private func convertMockToToDoItem(with mockItems: [MockItem]) -> [TodoItem] {
-        var items: [TodoItem] = []
+    private func convertMockToToDoItem(with networkingItems: [NetworkingItem]) -> [TodoItem] {
+        var toDoItems: [TodoItem] = []
         
-        for mockItem in mockItems {
+        for mockItem in networkingItems {
             var deadLineDate: Date?
+            
             if let deadline = mockItem.deadline {
                 deadLineDate = Date(timeIntervalSince1970: Double(deadline))
             }
+            
             let item = TodoItem(
                 id: mockItem.id,
                 text: mockItem.text,
-                priority: ImportanceTest.mapPriority(with: mockItem.importance),
+                priority: NetworkingImportance.mapPriority(with: mockItem.importance),
                 deadLineDate: deadLineDate,
                 isCompleted: mockItem.done,
                 creationDate: Date(timeIntervalSince1970: Double(mockItem.created_at)),
                 changeDate: Date(timeIntervalSince1970: Double(mockItem.changed_at)),
                 hex: mockItem.color
             )
-            items.append(item)
+            toDoItems.append(item)
         }
-        return items
+        return toDoItems
     }
     
-    private func convertToDoToMock(with toDoItems: [TodoItem]) -> [MockItem] {
-        var mockItems: [MockItem] = []
+    private func convertToDoToMock(with toDoItems: [TodoItem]) -> [NetworkingItem] {
+        var networkingItems: [NetworkingItem] = []
         for item in toDoItems {
-            let newMock = MockItem(
+            let newMock = NetworkingItem(
                 files: nil,
                 id: item.id,
                 text: item.text,
-                importance: ImportanceTest.mapImportance(with: item.priority),
+                importance: NetworkingImportance.mapImportance(with: item.priority),
                 deadline: item.deadLineDate?.unixTimeStamp,
                 done: item.isCompleted,
                 color: item.hex,
@@ -121,35 +116,35 @@ actor NetworkingDataHandler {
                 last_updated_by: "qq"
                 
             )
-            mockItems.append(newMock)
+            networkingItems.append(newMock)
         }
-        return mockItems
+        return networkingItems
     }
     
-    private func convertSingleMock(with mockItem: MockItem) -> TodoItem {
+    private func convertSingleMock(with networkingItem: NetworkingItem) -> TodoItem {
         var deadLineDate: Date?
-        if let deadline = mockItem.deadline {
+        if let deadline = networkingItem.deadline {
             deadLineDate = Date(timeIntervalSince1970: Double(deadline))
         }
         
         return TodoItem(
-            id: mockItem.id,
-            text: mockItem.text,
-            priority: ImportanceTest.mapPriority(with: mockItem.importance),
+            id: networkingItem.id,
+            text: networkingItem.text,
+            priority: NetworkingImportance.mapPriority(with: networkingItem.importance),
             deadLineDate: deadLineDate,
-            isCompleted: mockItem.done,
-            creationDate: Date(timeIntervalSince1970: Double(mockItem.created_at)),
-            changeDate: Date(timeIntervalSince1970: Double(mockItem.changed_at)),
-            hex: mockItem.color
+            isCompleted: networkingItem.done,
+            creationDate: Date(timeIntervalSince1970: Double(networkingItem.created_at)),
+            changeDate: Date(timeIntervalSince1970: Double(networkingItem.changed_at)),
+            hex: networkingItem.color
         )
     }
     
-    private func convertSingleToDo(with toDo: TodoItem) -> MockItem {
-        return MockItem(
+    private func convertSingleToDo(with toDo: TodoItem) -> NetworkingItem {
+        return NetworkingItem(
             files: nil,
             id: toDo.id,
             text: toDo.text,
-            importance: ImportanceTest.mapImportance(with: toDo.priority),
+            importance: NetworkingImportance.mapImportance(with: toDo.priority),
             deadline: toDo.deadLineDate?.unixTimeStamp,
             done: toDo.isCompleted,
             color: toDo.hex,
@@ -158,6 +153,4 @@ actor NetworkingDataHandler {
             last_updated_by: "qq"
         )
     }
-    
 }
-
