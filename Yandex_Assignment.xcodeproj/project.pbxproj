@@ -11,6 +11,8 @@
 		923404C42C409C4000E922F6 /* MyPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 923404C32C409C4000E922F6 /* MyPackage */; };
 		923404C62C41415F00E922F6 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923404C52C41415F00E922F6 /* URLSession.swift */; };
 		923404C82C41457700E922F6 /* NetworkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923404C72C41457700E922F6 /* NetworkingView.swift */; };
+		923A7AD62C49079500213214 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923A7AD52C49079500213214 /* NetworkingService.swift */; };
+		923A7AD82C4955EA00213214 /* NetworkingDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923A7AD72C4955EA00213214 /* NetworkingDataHandler.swift */; };
 		924E50B02C2CAC09004BEE2B /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50AF2C2CAC09004BEE2B /* TaskView.swift */; };
 		924E50B52C2D869F004BEE2B /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50B42C2D869F004BEE2B /* DateExtension.swift */; };
 		924E50B72C2EC8F1004BEE2B /* ItemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E50B62C2EC8F1004BEE2B /* ItemListViewModel.swift */; };
@@ -72,6 +74,8 @@
 		7AC8F0579A7502BE84ACEEBD /* Pods_Yandex_Assignment_Yandex_AssignmentUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yandex_Assignment_Yandex_AssignmentUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		923404C52C41415F00E922F6 /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
 		923404C72C41457700E922F6 /* NetworkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingView.swift; sourceTree = "<group>"; };
+		923A7AD52C49079500213214 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		923A7AD72C4955EA00213214 /* NetworkingDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingDataHandler.swift; sourceTree = "<group>"; };
 		924E50AF2C2CAC09004BEE2B /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		924E50B42C2D869F004BEE2B /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		924E50B62C2EC8F1004BEE2B /* ItemListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListViewModel.swift; sourceTree = "<group>"; };
@@ -272,6 +276,8 @@
 			children = (
 				92D33C3B2C24E5C100A6EED5 /* FileCache.swift */,
 				92D33C392C2496E400A6EED5 /* TodoItem.swift */,
+				923A7AD52C49079500213214 /* NetworkingService.swift */,
+				923A7AD72C4955EA00213214 /* NetworkingDataHandler.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -507,9 +513,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				923A7AD62C49079500213214 /* NetworkingService.swift in Sources */,
 				92D491122C24860E0081E4AB /* ItemListScreenView.swift in Sources */,
 				924E50B52C2D869F004BEE2B /* DateExtension.swift in Sources */,
 				928CD0532C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift in Sources */,
+				923A7AD82C4955EA00213214 /* NetworkingDataHandler.swift in Sources */,
 				92D780D82C35D9D300605FFA /* CalendarViewSUI.swift in Sources */,
 				92D33C3A2C2496E400A6EED5 /* TodoItem.swift in Sources */,
 				92D780DC2C36C95600605FFA /* CalendarViewDateCell.swift in Sources */,

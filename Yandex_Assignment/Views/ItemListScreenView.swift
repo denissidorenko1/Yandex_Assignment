@@ -31,7 +31,14 @@ struct ItemListScreenView: View {
                                     })
                                 }
                                 .swipeActions(edge: .leading) {
-                                    Button(action: { itemListVM.toggleDone(with: item.id) }) {
+                                    Button(action: {
+                                        
+//                                        Task {
+                                            print("toggle done?")
+                                            itemListVM.toggleDone(with: item.id)
+//                                        }
+                                        
+                                    }) {
                                         Label("Done", systemImage: "checkmark.circle.fill").tint(.blue)
                                     }
                                 }
@@ -73,6 +80,19 @@ struct ItemListScreenView: View {
                 .navigationTitle("Мои дела")
                 VStack {
                     Spacer()
+                    
+                    Button {
+                        itemListVM.fetch()
+//                        Task {
+//                            await itemListVM.requestNetworkList()
+//                        }
+                    } label: {
+                        Image(systemName: "screwdriver")
+                            .resizable()
+                            .frame(width: 44, height: 44)
+                    }
+
+                    
                     Button(action: {
                         showingSheet.toggle()
                     }, label: {
@@ -105,8 +125,12 @@ struct ItemListScreenView: View {
         }
         .onAppear {
             DDLogInfo("Обновляем данные в списке \(Self.self)")
+//            Task {
             itemListVM.fetch()
+//                await itemListVM.requestNetworkList()
+//            }
         }
+        
     }
 }
 

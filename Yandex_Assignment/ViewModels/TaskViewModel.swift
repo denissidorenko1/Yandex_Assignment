@@ -16,6 +16,7 @@ final class TaskViewModel: TaskViewModelManageable {
     var categories: [Activity] = []
 
     var categoryManager = CategoryManager()
+    let networkHandler: NetworkingDataHandler = NetworkingDataHandler.shared
 
     init(
         item: TodoItem,
@@ -34,9 +35,30 @@ final class TaskViewModel: TaskViewModelManageable {
         switch viewState {
         case .editing:
             DDLogInfo("\(Self.self) изменяет данные с айтемом \(newItem)")
-            edit(newValue: newItem)
+            
+            // TODO: - это было закомментировано
+            edit(newValue: newItem) // либо здесь ошибка, либо там
+//            do {
+//                Task {
+////                    itemListVM.update(with: newItem.id, newVersion: newItem)
+//                    try await networkHandler.editItem(with: newItem)
+////                    try await networkHandler.editItem(with: newItem)
+//                }
+//            } catch {
+//                print(error)
+//            }
         case .adding:
             DDLogInfo("\(Self.self) добавляет данные с айтемом \(newItem)")
+            Task {
+                do {
+                    try await networkHandler.addNew(with: newItem)
+                } catch {
+                    print("добавление упало")
+                    print(error)
+                    DDLogWarn("Добавление упало")
+                }
+                
+            }
             itemListVM.add(newItem: newItem)
             itemListVM.save()
         }
@@ -50,6 +72,14 @@ final class TaskViewModel: TaskViewModelManageable {
 
         switch viewState {
         case .editing:
+            do {
+                Task {
+                    try await networkHandler.deleteByID(with: item.id)
+                }
+            } catch {
+                print("удаление упало")
+                DDLogWarn("\(Self.self) удаление упало")
+            }
             itemListVM.delete(with: item.id)
             itemListVM.save()
             DDLogInfo("\(Self.self) удаляет айтем с id \(item.id)")
@@ -86,8 +116,17 @@ final class TaskViewModel: TaskViewModelManageable {
                 hex: newValue.hex,
                 category: newValue.category
             )
-            itemListVM.update(with: item.id, newVersion: newVersion)
-            itemListVM.save()
+            
+            do {
+                Task {
+                    try await networkHandler.editItem(with: newVersion)
+                    itemListVM.update(with: item.id, newVersion: newVersion)
+                    itemListVM.save()
+                }
+            } catch {
+                DDLogWarn("\(Self.self) не получилось изменить")
+                print("Удаление упало")
+            }
             DDLogInfo("\(Self.self) редактирует данные с новым айтемом \(newValue)")
         case .adding:
             DDLogWarn("\(Self.self) пытается изменить данные из режима добавления, это так не должно работать")
