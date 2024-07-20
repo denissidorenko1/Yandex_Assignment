@@ -5,7 +5,7 @@ import UIKit
 struct TaskView: View {
     //  вью-модель эерана
     @State var taskVM: TaskViewModelManageable
-
+    @State var id: String
     // вводимые данные
     @State var text: String
     @State var priority: TodoItem.Priority
@@ -56,8 +56,8 @@ struct TaskView: View {
         item: TodoItem,
         viewModel: ListViewManageable,
         viewState: ViewState
-
     ) {
+        self.id = item.id
         self.text = item.text
         self.priority = item.priority
         self.deadLine = item.deadLineDate
@@ -68,7 +68,7 @@ struct TaskView: View {
         self.hexColor = item.hex ?? "000000"
         self.slider = 0.5
         self.color = 0.5
-        self.selectedCategory = item.category
+        self.selectedCategory = item.category ?? Activity(name: "Другое", hexColor: "FFFFFF")
     }
 
     //
@@ -100,6 +100,7 @@ struct TaskView: View {
                 Button(action: {
                     // конструируем тудушку из данных и передаем ее во вьюмодель
                     let inputedItem = TodoItem(
+                        id: id,               
                         text: text,
                         priority: priority,
                         deadLineDate: deadLine,

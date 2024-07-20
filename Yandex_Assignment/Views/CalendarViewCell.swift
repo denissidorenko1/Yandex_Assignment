@@ -1,7 +1,7 @@
 import UIKit
 import SwiftUI
 @_spi(Public) import MyPackage
-class CalendarViewItemCell: UITableViewCell {
+final class CalendarViewItemCell: UITableViewCell {
     var sectionIndex: Int?
     let label = UILabel()
     let categoryMark = UIImageView(image: UIImage(systemName: "circle.fill"))
@@ -22,12 +22,12 @@ class CalendarViewItemCell: UITableViewCell {
     func setContent(with item: TodoItem) {
         label.attributedText = NSAttributedString(string: item.text, attributes: item.isCompleted == true ? [.strikethroughStyle: NSUnderlineStyle.single.rawValue] : [:])
         label.textColor = item.isCompleted == true ? .gray : .label
-        if item.category.hexColor != "FFFFFF" {
+        if item.category?.hexColor != "FFFFFF" {
             categoryMark.layer.shadowColor = UIColor.black.cgColor
             categoryMark.layer.shadowRadius = 3
             categoryMark.layer.shadowOpacity = 0.5
             categoryMark.layer.shadowOffset = CGSize(width: 0, height: 5)
-            categoryMark.tintColor = UIColor(Color.colorFromHex(hex: item.category.hexColor))
+            categoryMark.tintColor = UIColor(Color.colorFromHex(hex: item.category?.hexColor ?? "FFFFFF"))
             categoryMark.layer.backgroundColor = UIColor.clear.cgColor
         } else {
             categoryMark.tintColor = .clear

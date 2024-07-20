@@ -2,49 +2,70 @@ import Foundation
 import CocoaLumberjackSwift
 
 @Observable
-final class ItemListViewModel: ListViewManageable {
+final class ItemListViewModel: ListViewManageable, Sendable {
     private let url: URL
     private let fileName: String
     private let cacher: ItemCacher
     private(set) var doneItemsCount: Int
     private(set) var itemList: [TodoItem] = []
-
+    private let networkHandler: NetworkingService
+    
+    var isUpdating = false
+    
     var isDoneShown: Bool = false { didSet {
         fetch()
     }}
 
-    init(cacher: ItemCacher, url: URL = URL(fileURLWithPath: ""), fileName: String = "smth.json") {
+    init(
+        cacher: ItemCacher,
+        url: URL = URL(fileURLWithPath: ""),
+        fileName: String = "smth.json",
+        networkHandler: NetworkingService = DefaultNetworkingService.shared
+    ) {
         self.cacher = cacher
         self.url = url
         self.fileName = fileName
         self.doneItemsCount = 0
+        self.networkHandler = networkHandler
         DDLogInfo("\(Self.self) инициализирован")
     }
 
     func fetch() {
+        isUpdating = true
         do {
             if isDoneShown {
                 try cacher.loadAllItemsFromFile(with: url, fileName: fileName)
-                doneItemsCount = cacher.items.values.filter {$0.isCompleted == true}.count
-                itemList = cacher.items.values.map {$0}.sorted(by: { left, right in
-                    left.creationDate > right.creationDate
-                })
+                Task {
+                    let allItems = try await networkHandler.getAll()
+                    isUpdating = false
+                    doneItemsCount = allItems.filter {$0.isCompleted == true}.count
+                    itemList = allItems.sorted(by: { left, right in
+                        left.creationDate > right.creationDate
+                    })
+                }
             } else {
                 try cacher.loadAllItemsFromFile(with: url, fileName: fileName)
-                doneItemsCount = cacher.items.values.filter {$0.isCompleted == true}.count
-                itemList = cacher.items.values.map {$0}.filter {$0.isCompleted == false}.sorted(by: { left, right in
-                    left.creationDate > right.creationDate
-                })
+                Task {
+                    let allItems = try await networkHandler.getAll()
+                    isUpdating = false
+                    doneItemsCount = allItems.filter {$0.isCompleted == true}.count
+                    itemList = allItems.filter {$0.isCompleted == false}.sorted(by: { left, right in
+                        left.creationDate > right.creationDate
+                    })
+                }
             }
             DDLogInfo("Items fetched from \(Self.self)")
         } catch {
             DDLogError("Fetch failed from \(Self.self)")
             print(error)
         }
+        
     }
+    
 
-    func toggleDone(with id: String) {
-        guard let item = cacher.items[id] else { return }
+    func toggleDone(with id: String)  {
+        isUpdating = true
+        guard let item = cacher.items[id] else {  return }
         let newItem = TodoItem(
             id: item.id,
             text: item.text,
@@ -57,8 +78,12 @@ final class ItemListViewModel: ListViewManageable {
         )
         do {
             try cacher.editItem(with: id, newVersion: newItem)
-            save()
-            DDLogInfo("Статус изменен в \(Self.self) с \(id) id")
+            Task {
+                try await networkHandler.editItem(with: newItem)
+                save()
+                DDLogInfo("Статус изменен в \(Self.self) с \(id) id")
+                return
+            }
         } catch {
             DDLogError("Изменение кэшера и сохранение в \(Self.self) упало")
             print(error)
@@ -67,8 +92,12 @@ final class ItemListViewModel: ListViewManageable {
     }
 
     func add(newItem: TodoItem) {
+        isUpdating = true
         do {
             try cacher.addNewItem(with: newItem)
+            Task {
+                try await networkHandler.addNew(with: newItem)
+            }
             save()
             DDLogInfo("Тудушка \(newItem) сохранена из \(Self.self)")
         } catch {
@@ -79,13 +108,23 @@ final class ItemListViewModel: ListViewManageable {
     }
 
     func delete(with id: String) {
+        isUpdating = true
         cacher.deleteItem(with: id)
+            Task {
+                try await networkHandler.deleteByID(with: id)
+            }
         save()
     }
 
     func update(with id: String, newVersion: TodoItem) {
+        isUpdating = true
         do {
             try cacher.editItem(with: id, newVersion: newVersion)
+            Task {
+                try await networkHandler.editItem(with: newVersion)
+                fetch()
+            }
+            
             save()
             DDLogInfo("Тудушка обновлена из \(Self.self) с новой версией \(newVersion)")
         } catch {
@@ -115,7 +154,7 @@ protocol ListViewManageable: AnyObject {
 
     var isDoneShown: Bool { get set }
 
-    func toggleDone(with id: String)
+    func toggleDone(with id: String) async
 
     func fetch()
 

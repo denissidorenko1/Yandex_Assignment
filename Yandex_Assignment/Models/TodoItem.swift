@@ -16,7 +16,7 @@ struct TodoItem {
     let creationDate: Date
     let changeDate: Date?
     let hex: String?
-    let category: Activity
+    let category: Activity?
 
     init(
         id: String = UUID().uuidString,
@@ -27,7 +27,7 @@ struct TodoItem {
         creationDate: Date = .now,
         changeDate: Date? = nil,
         hex: String?,
-        category: Activity = Activity(name: "Другое", hexColor: "FFFFFF")
+        category: Activity? = Activity(name: "Другое", hexColor: "FFFFFF")
     ) {
         self.id = id
         self.text = text
@@ -102,8 +102,8 @@ extension TodoItem {
         dict[FieldDescriptor.isCompleted.rawValue] = isCompleted.description
         dict[FieldDescriptor.creationDate.rawValue] = formatter.string(from: creationDate)
         dict[FieldDescriptor.hex.rawValue] = hex
-        dict[FieldDescriptor.categoryName.rawValue] = category.name
-        dict[FieldDescriptor.categoryColor.rawValue] = category.hexColor
+        dict[FieldDescriptor.categoryName.rawValue] = category?.name ?? "Другое"
+        dict[FieldDescriptor.categoryColor.rawValue] = category?.hexColor ?? "ffffff"
 
         if changeDate != nil { dict[FieldDescriptor.changeDate.rawValue] = formatter.string(from: changeDate!) }
         if priority != .usual { dict[FieldDescriptor.priority.rawValue] = priority.rawValue }

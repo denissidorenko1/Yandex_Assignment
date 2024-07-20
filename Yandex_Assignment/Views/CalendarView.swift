@@ -1,7 +1,7 @@
 import UIKit
 import SwiftUI
 
-class CalendarView: UIViewController {
+final class CalendarView: UIViewController {
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     let addNewButton =  UIButton()

@@ -14,7 +14,6 @@ struct ItemListScreenView: View {
     var body: some View {
         NavigationView {
             ZStack {
-
                 List {
                     Section {
                         ForEach(itemListVM.itemList) { item in
@@ -31,7 +30,10 @@ struct ItemListScreenView: View {
                                     })
                                 }
                                 .swipeActions(edge: .leading) {
-                                    Button(action: { itemListVM.toggleDone(with: item.id) }) {
+                                    Button(action: {
+                                            print("toggle done?")
+                                            itemListVM.toggleDone(with: item.id)
+                                    }) {
                                         Label("Done", systemImage: "checkmark.circle.fill").tint(.blue)
                                     }
                                 }
@@ -58,7 +60,13 @@ struct ItemListScreenView: View {
                                 Image(systemName: "calendar")
                             }
                         HStack {
+                            
                             Text("Выполнено — \(itemListVM.doneItemsCount)")
+                            
+                            if itemListVM.isUpdating {
+                                ProgressView()
+                            }
+                            
                             Spacer()
                             Button(action: {
                                 itemListVM.isDoneShown.toggle()
@@ -107,6 +115,7 @@ struct ItemListScreenView: View {
             DDLogInfo("Обновляем данные в списке \(Self.self)")
             itemListVM.fetch()
         }
+        
     }
 }
 
