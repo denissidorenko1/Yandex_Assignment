@@ -57,3 +57,10 @@ struct NetworkingListResponse: Codable {
     let revision: Int
     let status: String
 }
+
+struct RetrySettings {
+    let minDelay = 2
+    let maxDelay = 120
+    let factor = 1.5
+    let jitter = 0.05
+}

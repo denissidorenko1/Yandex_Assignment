@@ -8,7 +8,9 @@ final class ItemListViewModel: ListViewManageable, Sendable {
     private let cacher: ItemCacher
     private(set) var doneItemsCount: Int
     private(set) var itemList: [TodoItem] = []
-    private let networkHandler: NetworkingDataHandler
+    private let networkHandler: NetworkingService
+    
+    var isUpdating = false
     
     var isDoneShown: Bool = false { didSet {
         fetch()
@@ -18,8 +20,7 @@ final class ItemListViewModel: ListViewManageable, Sendable {
         cacher: ItemCacher,
         url: URL = URL(fileURLWithPath: ""),
         fileName: String = "smth.json",
-        
-        networkHandler: NetworkingDataHandler = NetworkingDataHandler.shared
+        networkHandler: NetworkingService = DefaultNetworkingService.shared
     ) {
         self.cacher = cacher
         self.url = url
@@ -30,11 +31,13 @@ final class ItemListViewModel: ListViewManageable, Sendable {
     }
 
     func fetch() {
+        isUpdating = true
         do {
             if isDoneShown {
                 try cacher.loadAllItemsFromFile(with: url, fileName: fileName)
                 Task {
                     let allItems = try await networkHandler.getAll()
+                    isUpdating = false
                     doneItemsCount = allItems.filter {$0.isCompleted == true}.count
                     itemList = allItems.sorted(by: { left, right in
                         left.creationDate > right.creationDate
@@ -44,6 +47,7 @@ final class ItemListViewModel: ListViewManageable, Sendable {
                 try cacher.loadAllItemsFromFile(with: url, fileName: fileName)
                 Task {
                     let allItems = try await networkHandler.getAll()
+                    isUpdating = false
                     doneItemsCount = allItems.filter {$0.isCompleted == true}.count
                     itemList = allItems.filter {$0.isCompleted == false}.sorted(by: { left, right in
                         left.creationDate > right.creationDate
@@ -58,17 +62,9 @@ final class ItemListViewModel: ListViewManageable, Sendable {
         
     }
     
-    func requestNetworkList() async {
-        do {
-            let allData = try await networkHandler.getAll()
-            itemList = allData
-        } catch {
-            print(error)
-            DDLogError("Network request failed from \(Self.self) with error \(error)")
-        }
-    }
 
     func toggleDone(with id: String)  {
+        isUpdating = true
         guard let item = cacher.items[id] else {  return }
         let newItem = TodoItem(
             id: item.id,
@@ -96,6 +92,7 @@ final class ItemListViewModel: ListViewManageable, Sendable {
     }
 
     func add(newItem: TodoItem) {
+        isUpdating = true
         do {
             try cacher.addNewItem(with: newItem)
             Task {
@@ -111,6 +108,7 @@ final class ItemListViewModel: ListViewManageable, Sendable {
     }
 
     func delete(with id: String) {
+        isUpdating = true
         cacher.deleteItem(with: id)
             Task {
                 try await networkHandler.deleteByID(with: id)
@@ -119,11 +117,14 @@ final class ItemListViewModel: ListViewManageable, Sendable {
     }
 
     func update(with id: String, newVersion: TodoItem) {
+        isUpdating = true
         do {
             try cacher.editItem(with: id, newVersion: newVersion)
             Task {
                 try await networkHandler.editItem(with: newVersion)
+                fetch()
             }
+            
             save()
             DDLogInfo("Тудушка обновлена из \(Self.self) с новой версией \(newVersion)")
         } catch {
@@ -164,6 +165,4 @@ protocol ListViewManageable: AnyObject {
     func add(newItem: TodoItem)
 
     func save()
-    
-    func requestNetworkList() async
 }

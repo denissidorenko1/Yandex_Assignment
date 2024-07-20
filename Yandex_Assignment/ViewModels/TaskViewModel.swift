@@ -16,7 +16,7 @@ final class TaskViewModel: TaskViewModelManageable {
     var categories: [Activity] = []
 
     var categoryManager = CategoryManager()
-    let networkHandler: NetworkingDataHandler = NetworkingDataHandler.shared
+    let networkHandler: DefaultNetworkingService = DefaultNetworkingService.shared
 
     init(
         item: TodoItem,

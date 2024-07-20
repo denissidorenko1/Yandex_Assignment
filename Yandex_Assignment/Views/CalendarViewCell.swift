@@ -1,7 +1,7 @@
 import UIKit
 import SwiftUI
 @_spi(Public) import MyPackage
-class CalendarViewItemCell: UITableViewCell {
+final class CalendarViewItemCell: UITableViewCell {
     var sectionIndex: Int?
     let label = UILabel()
     let categoryMark = UIImageView(image: UIImage(systemName: "circle.fill"))

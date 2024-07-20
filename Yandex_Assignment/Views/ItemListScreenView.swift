@@ -14,7 +14,6 @@ struct ItemListScreenView: View {
     var body: some View {
         NavigationView {
             ZStack {
-
                 List {
                     Section {
                         ForEach(itemListVM.itemList) { item in
@@ -61,7 +60,13 @@ struct ItemListScreenView: View {
                                 Image(systemName: "calendar")
                             }
                         HStack {
+                            
                             Text("Выполнено — \(itemListVM.doneItemsCount)")
+                            
+                            if itemListVM.isUpdating {
+                                ProgressView()
+                            }
+                            
                             Spacer()
                             Button(action: {
                                 itemListVM.isDoneShown.toggle()
@@ -76,16 +81,6 @@ struct ItemListScreenView: View {
                 .navigationTitle("Мои дела")
                 VStack {
                     Spacer()
-                    
-//                    Button {
-//                        itemListVM.fetch()
-//                    } label: {
-//                        Image(systemName: "screwdriver")
-//                            .resizable()
-//                            .frame(width: 44, height: 44)
-//                    }
-
-                    
                     Button(action: {
                         showingSheet.toggle()
                     }, label: {
