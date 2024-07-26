@@ -11,6 +11,8 @@
 		923404C42C409C4000E922F6 /* MyPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 923404C32C409C4000E922F6 /* MyPackage */; };
 		923404C62C41415F00E922F6 /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923404C52C41415F00E922F6 /* URLSession.swift */; };
 		923404C82C41457700E922F6 /* NetworkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923404C72C41457700E922F6 /* NetworkingView.swift */; };
+		923917CD2C53D613003A90B4 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923917CC2C53D613003A90B4 /* FileCache.swift */; };
+		923917D02C5400AC003A90B4 /* FileCachePersistanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923917CF2C5400AC003A90B4 /* FileCachePersistanceTests.swift */; };
 		923A7AD62C49079500213214 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923A7AD52C49079500213214 /* NetworkingService.swift */; };
 		923A7ADA2C4B110B00213214 /* NetworkingDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923A7AD92C4B110B00213214 /* NetworkingDataModels.swift */; };
 		923A7ADC2C4B124B00213214 /* URLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923A7ADB2C4B124B00213214 /* URLResponse.swift */; };
@@ -31,7 +33,6 @@
 		92A381972C4036AC00444484 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 92A381962C4036AC00444484 /* CocoaLumberjack */; };
 		92A381992C4036CA00444484 /* CocoaLumberjackSwiftLogBackend in Frameworks */ = {isa = PBXBuildFile; productRef = 92A381982C4036CA00444484 /* CocoaLumberjackSwiftLogBackend */; };
 		92D33C3A2C2496E400A6EED5 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C392C2496E400A6EED5 /* TodoItem.swift */; };
-		92D33C3C2C24E5C100A6EED5 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C3B2C24E5C100A6EED5 /* FileCache.swift */; };
 		92D33C3E2C25952200A6EED5 /* ToDoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C3D2C25952200A6EED5 /* ToDoItemTests.swift */; };
 		92D33C402C259EB100A6EED5 /* FileCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D33C3F2C259EB100A6EED5 /* FileCacheTests.swift */; };
 		92D491102C24860E0081E4AB /* YandexAssignmentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D4910F2C24860E0081E4AB /* YandexAssignmentApp.swift */; };
@@ -76,6 +77,8 @@
 		7AC8F0579A7502BE84ACEEBD /* Pods_Yandex_Assignment_Yandex_AssignmentUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yandex_Assignment_Yandex_AssignmentUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		923404C52C41415F00E922F6 /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
 		923404C72C41457700E922F6 /* NetworkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingView.swift; sourceTree = "<group>"; };
+		923917CC2C53D613003A90B4 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
+		923917CF2C5400AC003A90B4 /* FileCachePersistanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCachePersistanceTests.swift; sourceTree = "<group>"; };
 		923A7AD52C49079500213214 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		923A7AD92C4B110B00213214 /* NetworkingDataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingDataModels.swift; sourceTree = "<group>"; };
 		923A7ADB2C4B124B00213214 /* URLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLResponse.swift; sourceTree = "<group>"; };
@@ -93,7 +96,6 @@
 		928CD0522C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarView+TableViewExtensions.swift"; sourceTree = "<group>"; };
 		928CD0542C38B0CD00668AFC /* CalendarView+CollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarView+CollectionViewExtensions.swift"; sourceTree = "<group>"; };
 		92D33C392C2496E400A6EED5 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
-		92D33C3B2C24E5C100A6EED5 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xcfilelist; };
 		92D33C3D2C25952200A6EED5 /* ToDoItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemTests.swift; sourceTree = "<group>"; };
 		92D33C3F2C259EB100A6EED5 /* FileCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCacheTests.swift; sourceTree = "<group>"; };
 		92D4910C2C24860E0081E4AB /* Yandex_Assignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yandex_Assignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +234,7 @@
 			children = (
 				92D33C3D2C25952200A6EED5 /* ToDoItemTests.swift */,
 				92D33C3F2C259EB100A6EED5 /* FileCacheTests.swift */,
+				923917CF2C5400AC003A90B4 /* FileCachePersistanceTests.swift */,
 			);
 			path = Yandex_AssignmentTests;
 			sourceTree = "<group>";
@@ -281,9 +284,9 @@
 			isa = PBXGroup;
 			children = (
 				923A7AD92C4B110B00213214 /* NetworkingDataModels.swift */,
-				92D33C3B2C24E5C100A6EED5 /* FileCache.swift */,
 				92D33C392C2496E400A6EED5 /* TodoItem.swift */,
 				923A7AD52C49079500213214 /* NetworkingService.swift */,
+				923917CC2C53D613003A90B4 /* FileCache.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 			files = (
 				923A7AD62C49079500213214 /* NetworkingService.swift in Sources */,
 				92D491122C24860E0081E4AB /* ItemListScreenView.swift in Sources */,
+				923917CD2C53D613003A90B4 /* FileCache.swift in Sources */,
 				924E50B52C2D869F004BEE2B /* DateExtension.swift in Sources */,
 				928CD0532C38B0BA00668AFC /* CalendarView+TableViewExtensions.swift in Sources */,
 				92D780D82C35D9D300605FFA /* CalendarViewSUI.swift in Sources */,
@@ -528,7 +532,6 @@
 				92D780DC2C36C95600605FFA /* CalendarViewDateCell.swift in Sources */,
 				924E50C22C2F7B59004BEE2B /* ColorExtension.swift in Sources */,
 				92D781032C36D75000605FFA /* CalendarViewModel.swift in Sources */,
-				92D33C3C2C24E5C100A6EED5 /* FileCache.swift in Sources */,
 				923404C62C41415F00E922F6 /* URLSession.swift in Sources */,
 				923A7ADF2C4B1EB900213214 /* DefaultNetworkingService.swift in Sources */,
 				923404C82C41457700E922F6 /* NetworkingView.swift in Sources */,
@@ -554,6 +557,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				923917D02C5400AC003A90B4 /* FileCachePersistanceTests.swift in Sources */,
 				92D33C3E2C25952200A6EED5 /* ToDoItemTests.swift in Sources */,
 				92D33C402C259EB100A6EED5 /* FileCacheTests.swift in Sources */,
 			);

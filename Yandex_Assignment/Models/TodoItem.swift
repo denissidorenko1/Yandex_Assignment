@@ -1,13 +1,15 @@
 import Foundation
+import SwiftData
 @_spi(Public) import MyPackage
 // MARK: - структура ToDoItem
-struct TodoItem {
-    enum Priority: String {
+@Model
+final class TodoItem {
+    enum Priority: String, Codable {
         case unimportant
         case usual
         case important
     }
-
+    @Attribute(.unique)
     let id: String
     let text: String
     let priority: Priority
@@ -38,6 +40,28 @@ struct TodoItem {
         self.changeDate = changeDate
         self.hex = hex
         self.category = category
+    }
+}
+
+// SwiftData работает только с моделями которые конформят Decodable
+extension TodoItem: Decodable {
+    enum CodingKeys: String, CodingKey {
+        case id, text, priority, deadLineDate, isCompleted, creationDate, changeDate, hex, category
+    }
+    
+    convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(
+            id: try container.decode(String.self, forKey: .id),
+            text: try container.decode(String.self, forKey: .text),
+            priority: try container.decode(Priority.self, forKey: .priority),
+            deadLineDate: try? container.decode(Date.self, forKey: .deadLineDate),
+            isCompleted: try container.decode(Bool.self, forKey: .isCompleted),
+            creationDate: try container.decode(Date.self, forKey: .creationDate),
+            changeDate: try? container.decode(Date.self, forKey: .changeDate),
+            hex: try? container.decode(String.self, forKey: .hex),
+            category: try? container.decode(Activity.self, forKey: .category)
+        )
     }
 }
 
