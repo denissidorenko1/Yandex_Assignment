@@ -1,5 +1,7 @@
 import Foundation
-
+import SwiftData
+import SwiftUI
+@_spi(Public) import MyPackage
 // MARK: - FileCache, реализующий протокол с указанными требованиями
 final class FileCache: ItemCacher {
     enum CacherErrors: Error {
@@ -11,10 +13,113 @@ final class FileCache: ItemCacher {
         case unknownError
         case nothingToEdit
     }
+    
+    // MARK: - хранение в SwiftData
+    let container: ModelContainer
+    private var modelContext: ModelContext
+    private(set) var persistentItems: [TodoItem] = []
+    
+    // лучше быстро упасть, чем не заметить ошибку
+    init(container: ModelContainer = try! ModelContainer(for: TodoItem.self)) {
+        self.container = container
+        self.modelContext = ModelContext(container)
+    }
+    
+    func deleteAll() {
+        do {
+            try modelContext.delete(model: TodoItem.self)
+            fetch()
+        } catch {
+            print("Failed to delete all items: \(error)")
+        }
+    }
+    
+    func fetch() {
+        do {
+            let descriptor: FetchDescriptor<TodoItem> = FetchDescriptor()
+            let fetchedItems =  try modelContext.fetch(descriptor)
+            persistentItems = fetchedItems
+            try modelContext.save()
+        } catch {
+            print("Failed to fetch items: \(error)")
+        }
+    }
+    
+    func delete(_ todoItem: TodoItem) {
+        modelContext.delete(todoItem)
+        fetch()
+    }
+    
+    func update(_ todoItem: TodoItem) {
+        /*
+         Это самый странный костыль что я писал за последнее время. в чем суть:
+         У нас есть 2 айтема: старый и новый, id совпадают. У контекста нет метода обновления (в нашем функционале без вью)
+         Обновить через insert - не вариант, оно падает при совпадении ключей, удалить старый и добавить новый не выходит по той же причине (наверно старый где-то в истории валяется
+         и мешает)
+         Что делаем? Смотрим что возвращает метод model - any PersistentModel,
+         PersistentModel подписан на AnyObject и является reference типом
+         Идем по ссылке и меняем элемент!
+         */
+        var toDelete = modelContext.model(for: todoItem.persistentModelID)
+        toDelete = todoItem
+        fetch()
+    }
+    
+    func insert(_ todoItem: TodoItem) {
+        modelContext.insert(todoItem)
+        fetch()
+    }
+    
+    func fetch(
+        include: ((TodoItem) -> Bool)? = nil,
+        // ААААА в SwiftData не работают дженерики, придется ставить костыль
+        key: TodoItem.FieldDescriptor? = nil
+    ) {
+        do {
+            var sorter: SortDescriptor<TodoItem>?
+            switch key {
+            case .id:
+                sorter = SortDescriptor(\.id)
+            case .text:
+                sorter = SortDescriptor(\.text)
+            case .priority:
+                // почему не может сортировать по приоритету с имплементацией Comparable?
+                sorter = SortDescriptor(\.priority.rawValue)
+            case .deadLineDate:
+                sorter = SortDescriptor(\.deadLineDate)
+            case .isCompleted:
+                // почему SortDescriptor не может сортировать по логическому значению?
+                sorter = SortDescriptor(\.isCompleted.description)
+            case .creationDate:
+                sorter = SortDescriptor(\.creationDate)
+            case .changeDate:
+                sorter = SortDescriptor(\.changeDate)
+            case .hex:
+                sorter = SortDescriptor(\.hex)
+            case .categoryName:
+                sorter = SortDescriptor(\.category?.name)
+            case .categoryColor:
+                sorter = SortDescriptor(\.category?.hexColor)
+            case nil:
+                sorter = SortDescriptor(\.creationDate)
+            }
+            let descriptor: FetchDescriptor<TodoItem> = FetchDescriptor(sortBy: [sorter!])
+            let fetchedItems = try modelContext.fetch(descriptor)
+            persistentItems = fetchedItems.filter({ item in
+                if include != nil {
+                    return include!(item)
+                }
+                return true
+            })
+        } catch {
+            print("Failed to fetch items: \(error)")
+        }
+    }
 
+    // MARK: - файловое хранение
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
-
+    
     // используем словарь для O(1) обращений по ключу
     private(set)var items: [String: TodoItem] = [:]
 

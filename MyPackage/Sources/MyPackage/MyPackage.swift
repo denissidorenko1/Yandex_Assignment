@@ -10,6 +10,23 @@ import UIKit
         self.name = name
         self.hexColor = hexColor
     }
+    
+    public init(from decoder: any Decoder) throws {
+        @_spi(Public) let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.hexColor = try container.decode(String.self, forKey: .hexColor)
+    }
+    
+    enum CodingKeys: CodingKey {
+        @_spi(Public) case name
+        @_spi(Public) case hexColor
+    }
+    
+    public func encode(to encoder: any Encoder) throws {
+        @_spi(Public) var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.name, forKey: .name)
+        try container.encode(self.hexColor, forKey: .hexColor)
+    }
 }
 
 extension Activity: Hashable {
